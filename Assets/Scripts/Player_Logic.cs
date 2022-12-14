@@ -9,6 +9,13 @@ public class Player_Logic : NetworkBehaviour
     [SerializeField] private Transform playerTransform;
     private Vector3 localPlayerVelocity;
     private float movementSpeed = 3;
+    private string playerName = "LocalPlayer";
+    public override void OnNetworkSpawn()
+    {
+        if (!IsOwner) return;
+        gameObject.name = playerName;
+        gameObject.tag = playerName;
+    }
     void Update()
     {
         //return if it's not the local player
