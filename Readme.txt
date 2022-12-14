@@ -9,3 +9,4 @@ To build the game:
 You can start multiple clients to test out hosting:
 Run the build and choose server or host (Host is also a player, which we will probably use)
 Run another instance of the build and choose client instead.
+(Can of course also be used in the editor)
