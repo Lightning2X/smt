@@ -6,7 +6,7 @@ using Unity.Netcode;
 public class Player_Logic : NetworkBehaviour
 {
     [SerializeField] private Rigidbody playerRB;
-    [SerializeField] private Transform orientation;
+    [SerializeField] private Transform playerTransform;
     private Vector3 localPlayerVelocity;
     private float movementSpeed = 3;
     void Update()
@@ -19,7 +19,12 @@ public class Player_Logic : NetworkBehaviour
     //rigidbody doesn't seem to work with FixedUpdate
     //void FixedUpdate()
     //{
-    //    if (!IsOwner) return;        
+    //    if (!IsOwner) return;
+    //    if(localPlayerVelocity != Vector3.zero)
+    //    {
+    //        Debug.Log(localPlayerVelocity);
+    //    }
+    //    playerRB.AddForce(localPlayerVelocity.normalized * movementSpeed, ForceMode.Force);
     //}
     private void PlayerMovement()
     {
@@ -28,12 +33,18 @@ public class Player_Logic : NetworkBehaviour
         //We could make configurable keys.
         if (Input.GetKey(KeyCode.W))
         {
-            localPlayerVelocity += orientation.forward;
-            Debug.Log(localPlayerVelocity);
+            localPlayerVelocity += playerTransform.forward;
+            //Debug.Log("Is host: " + IsHost);
         }
-        if (Input.GetKey(KeyCode.A)) localPlayerVelocity -= orientation.right;
-        if (Input.GetKey(KeyCode.S)) localPlayerVelocity -= orientation.forward;
-        if (Input.GetKey(KeyCode.D)) localPlayerVelocity += orientation.right;
-        playerRB.AddForce(localPlayerVelocity.normalized * movementSpeed, ForceMode.Force);
+        if (Input.GetKey(KeyCode.A)) localPlayerVelocity -= playerTransform.right;
+        if (Input.GetKey(KeyCode.S)) localPlayerVelocity -= playerTransform.forward;
+        if (Input.GetKey(KeyCode.D)) localPlayerVelocity += playerTransform.right;
+
+        //Rigidbody somehow doesn't work if you build the game, but it does work with the editor. (For host and client the same)
+        //playerRB.AddForce(localPlayerVelocity.normalized * movementSpeed, ForceMode.Force);
+
+        //This somehow does work for editor and build, but the smoothness depends on the refreshrate of the monitor that the game starts on.
+        //deltaTime and fixedDeltaTime doesn't do anything.
+        playerTransform.position += localPlayerVelocity.normalized * movementSpeed * Time.deltaTime;
     }
 }
