@@ -10,11 +10,14 @@ public class Player_Logic : NetworkBehaviour
     private Vector3 localPlayerVelocity;
     private float movementSpeed = 3;
     private string playerName = "LocalPlayer";
+    private Camera_Logic camera;
     public override void OnNetworkSpawn()
     {
         if (!IsOwner) return;
         gameObject.name = playerName;
         gameObject.tag = playerName;
+        camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera_Logic>();
+        camera.InitLocalPlayer(gameObject.transform);
     }
     void Update()
     {
@@ -37,7 +40,7 @@ public class Player_Logic : NetworkBehaviour
     {
         //reset velocity dir
         localPlayerVelocity = Vector3.zero;
-        //We could make configurable keys.
+        //We could make configurable keys. use forward etc for when you move around the camera
         if (Input.GetKey(KeyCode.W))
         {
             localPlayerVelocity += playerTransform.forward;
