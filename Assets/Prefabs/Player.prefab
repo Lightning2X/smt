@@ -408,6 +408,7 @@ GameObject:
   - component: {fileID: 8421930616524544139}
   - component: {fileID: 454242124302025355}
   - component: {fileID: 2047113400824304580}
+  - component: {fileID: 3367848719024263570}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -583,6 +584,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3367848719024263570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637080268391105853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f828f55f50faf4017b1bfaaca53ebd71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myCamera: {fileID: 0}
+  timer: 0
+  int_timer: 0
+  zRotation: 0
+  wantedZ: 0
+  timeSpeed: 2
+  timerToRotateZ: 0
+  mouseSensitvity: 0
+  mouseSensitvity_notAiming: 300
+  mouseSensitvity_aiming: 50
+  yRotationSpeed: 0
+  xCameraSpeed: 0
+  wantedYRotation: 0
+  currentYRotation: 0
+  wantedCameraXRotation: 0
+  currentCameraXRotation: 0
+  topAngleView: 60
+  bottomAngleView: -45
+  weapon: {fileID: 0}
+  showFps: 1
 --- !u!1 &7041643058197474321
 GameObject:
   m_ObjectHideFlags: 0
