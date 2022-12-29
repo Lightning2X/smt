@@ -7,6 +7,7 @@ public class Player_Logic : NetworkBehaviour
 {
     [SerializeField] private Rigidbody playerRB;
     [SerializeField] private Transform playerTransform;
+    [SerializeField] private GameObject bullet;
     private Vector3 localPlayerVelocity;
     private float movementSpeed = 3;
     private string playerName = "LocalPlayer";
@@ -25,6 +26,11 @@ public class Player_Logic : NetworkBehaviour
         //return if it's not the local player
         if (!IsOwner) return;
         PlayerMovement();
+
+        if (Input.GetKeyDown(KeyCode.Q))
+            Instantiate(bullet, 
+                        playerTransform.position + (playerTransform.rotation * Vector3.forward),  
+                        Quaternion.identity);
     }
 
     //rigidbody doesn't seem to work with FixedUpdate

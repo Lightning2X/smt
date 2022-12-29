@@ -23,8 +23,6 @@ public class Enemy_Logistics : NetworkBehaviour
 
     void Update()
     {
-        playerTransform = playerObj.transform;
-        //return if it's not the local player
         EnemyAttack();
     }
 
@@ -32,7 +30,7 @@ public class Enemy_Logistics : NetworkBehaviour
 
     private void EnemyAttack()
     {
-        if(Distance(playerTransform, enemyTransform) > 6)
+        if(Distance(playerObj.transform, enemyTransform) > 6)
             return;
         //move towards player
         if(!audioSource.isPlaying)
@@ -41,7 +39,7 @@ public class Enemy_Logistics : NetworkBehaviour
             audioSource.Play();
         }
 
-        enemyTransform.position += MoveTo(playerTransform.position, enemyTransform.position) * Time.deltaTime;
+        enemyTransform.position += MoveTo(playerObj.transform.position, enemyTransform.position) * Time.deltaTime;
     }
 
     private float Distance(Transform ob1, Transform ob2)
