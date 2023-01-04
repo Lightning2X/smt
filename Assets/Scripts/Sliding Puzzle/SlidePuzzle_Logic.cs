@@ -7,11 +7,14 @@ public class SlidePuzzle_Logic : MonoBehaviour
     [SerializeField] private Transform emptySpace = null;
     private Camera cam;
     private GameObject[] blocks;
+    private float swapDistance = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
         cam = Camera.main;
         blocks = GameObject.FindGameObjectsWithTag("SlidingPuzzle_Block");
+        float height = blocks[1].GetComponent<SpriteRenderer>().bounds.size.x;
+        swapDistance = height;
         Shuffle();
     }
 
@@ -25,7 +28,7 @@ public class SlidePuzzle_Logic : MonoBehaviour
             if(hit)
             {
                 double dis = Vector2.Distance(emptySpace.position, hit.transform.position);
-                if(dis < 0.5)
+                if(dis <= swapDistance)
                 {
                     Vector2 lastEmptySpacePos = emptySpace.position;
                     Block_Logic thisBlock = hit.transform.GetComponent<Block_Logic>();
