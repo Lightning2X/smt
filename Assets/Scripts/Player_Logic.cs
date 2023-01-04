@@ -13,6 +13,9 @@ public class Player_Logic : NetworkBehaviour
     private string playerName = "LocalPlayer";
     private Camera_Logic cam;
     bool cursorLocked = false;
+    private float shootCD = 1;
+    private float lastShot = 0;
+
     public override void OnNetworkSpawn()
     {
         if (!IsOwner) return;
@@ -26,11 +29,7 @@ public class Player_Logic : NetworkBehaviour
         //return if it's not the local player
         if (!IsOwner) return;
         PlayerMovement();
-
-        if (Input.GetKeyDown(KeyCode.Q))
-            Instantiate(bullet, 
-                        playerTransform.position + (playerTransform.rotation * Vector3.forward),  
-                        Quaternion.identity);
+        PlayerShoot();
     }
 
     //rigidbody doesn't seem to work with FixedUpdate
@@ -71,5 +70,19 @@ public class Player_Logic : NetworkBehaviour
         //This somehow does work for editor and build, but the smoothness depends on the refreshrate of the monitor that the game starts on.
         //deltaTime and fixedDeltaTime doesn't do anything.
         playerTransform.position += localPlayerVelocity.normalized * movementSpeed * Time.deltaTime;
+    }
+
+    private void PlayerShoot()
+    {
+        if(Time.time - lastShot < shootCD)
+            return;
+
+        if (Input.GetKeyUp(KeyCode.Q))
+        {   
+            Instantiate(bullet, 
+                        playerTransform.position + (playerTransform.rotation * Vector3.forward),  
+                        Quaternion.identity);
+            lastShot = Time.time;
+        }
     }
 }
