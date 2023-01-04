@@ -7,10 +7,14 @@ public class Player_Logic : NetworkBehaviour
 {
     [SerializeField] private Rigidbody playerRB;
     [SerializeField] private Transform playerTransform;
+    [SerializeField] private GameObject bullet;
     private Vector3 localPlayerVelocity;
     private float movementSpeed = 3;
     private string playerName = "LocalPlayer";
     private Camera_Logic cam;
+    bool cursorLocked = false;
+    private float shootCD = 1;
+    private float lastShot = 0;
 
     public override void OnNetworkSpawn()
     {
@@ -25,6 +29,7 @@ public class Player_Logic : NetworkBehaviour
         //return if it's not the local player
         if (!IsOwner) return;
         PlayerMovement();
+        PlayerShoot();
     }
 
     //rigidbody doesn't seem to work with FixedUpdate
@@ -58,5 +63,19 @@ public class Player_Logic : NetworkBehaviour
         //deltaTime and fixedDeltaTime doesn't do anything.
         localPlayerVelocity.y = 0;
         playerTransform.position += localPlayerVelocity.normalized * movementSpeed * Time.deltaTime;
+    }
+
+    private void PlayerShoot()
+    {
+        if(Time.time - lastShot < shootCD)
+            return;
+
+        if (Input.GetKeyUp(KeyCode.Q))
+        {   
+            Instantiate(bullet, 
+                        playerTransform.position + (playerTransform.rotation * Vector3.forward),  
+                        Quaternion.identity);
+            lastShot = Time.time;
+        }
     }
 }
