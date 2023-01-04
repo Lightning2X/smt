@@ -36,11 +36,12 @@ public class SlidePuzzle_Logic : MonoBehaviour
                     thisBlock.targetPos = lastEmptySpacePos;
                 }
             }
-            if(Correct())
+            if(Correct()) //should be extended with the wanted functionality for succeding the puzzle
                 Debug.Log("Woohoo");
         }
     }
 
+    //shuufles all the blocks on the board except for the empty space
     public void Shuffle()
     {
         for(int n = 1; n < blocks.Length; n++)
@@ -48,12 +49,12 @@ public class SlidePuzzle_Logic : MonoBehaviour
             int rnd = Random.Range(1, blocks.Length);
             Vector2 safePos = blocks[n].GetComponent<Block_Logic>().targetPos;
             Vector2 testPos = blocks[rnd].GetComponent<Block_Logic>().targetPos;
-            Debug.Log(n + " | " + rnd + "\n" + safePos + "\n" + testPos);
             blocks[n].GetComponent<Block_Logic>().targetPos = testPos;
             blocks[rnd].GetComponent<Block_Logic>().targetPos = safePos;
         }
     }
 
+    //Checks if the current board is correct by checking if every piece is in correct position, return true or false accordingly
     public bool Correct()
     {
         for(int n = 1; n < blocks.Length; n++)
