@@ -55,20 +55,13 @@ public class Player_Logic : NetworkBehaviour
         if (Input.GetKey(KeyCode.A)) localPlayerVelocity -= playerTransform.right;
         if (Input.GetKey(KeyCode.S)) localPlayerVelocity -= playerTransform.forward;
         if (Input.GetKey(KeyCode.D)) localPlayerVelocity += playerTransform.right;
-        if (Input.GetKeyUp(KeyCode.P)) {
-            if (cursorLocked)
-                Cursor.lockState = CursorLockMode.None;
-            else
-                Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = cursorLocked;
-            cursorLocked = !cursorLocked;
-            Debug.Log("up");
-        }
+
         //Rigidbody somehow doesn't work if you build the game, but it does work with the editor. (For host and client the same)
         //playerRB.AddForce(localPlayerVelocity.normalized * movementSpeed, ForceMode.Force);
 
         //This somehow does work for editor and build, but the smoothness depends on the refreshrate of the monitor that the game starts on.
         //deltaTime and fixedDeltaTime doesn't do anything.
+        localPlayerVelocity.y = 0;
         playerTransform.position += localPlayerVelocity.normalized * movementSpeed * Time.deltaTime;
     }
 
