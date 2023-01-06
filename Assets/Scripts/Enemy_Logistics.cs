@@ -5,13 +5,24 @@ using Unity.Netcode;
 
 public class Enemy_Logistics : NetworkBehaviour
 {
-    [SerializeField] private Transform playerTransform;
-
+    //[SerializeField] private Transform playerTransform;
+    private Transform playerTransform;
+    private GameObject playerObj = null;
     [SerializeField] private Transform enemyTransform;
+    [SerializeField] private AudioClip clip;
+
+    private AudioSource audioSource;
+
+     private void Start()
+     {
+        audioSource = GetComponent<AudioSource>();
+
+        if (playerObj == null)
+            playerObj = GameObject.FindGameObjectWithTag("Player");
+     }
 
     void Update()
     {
-        //return if it's not the local player
         EnemyAttack();
     }
 
@@ -19,10 +30,16 @@ public class Enemy_Logistics : NetworkBehaviour
 
     private void EnemyAttack()
     {
-        if(Distance(playerTransform, enemyTransform) > 3)
+        if(Distance(playerObj.transform, enemyTransform) > 6)
             return;
         //move towards player
-        enemyTransform.position += MoveTo(playerTransform.position, enemyTransform.position) * Time.deltaTime;
+        if(!audioSource.isPlaying)
+        {
+            //AudioSource.PlayClipAtPoint(clip, enemyTransform.position);
+            audioSource.Play();
+        }
+
+        enemyTransform.position += MoveTo(playerObj.transform.position, enemyTransform.position) * Time.deltaTime;
     }
 
     private float Distance(Transform ob1, Transform ob2)
