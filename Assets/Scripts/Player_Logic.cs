@@ -11,7 +11,7 @@ public class Player_Logic : NetworkBehaviour
     private float movementSpeed = 3;
     private string playerName = "LocalPlayer";
     private Camera_Logic cam;
-
+    private NetworkVariable<int> collectibles = new NetworkVariable<int>(0);
     public override void OnNetworkSpawn()
     {
         if (!IsOwner) return;
@@ -20,7 +20,12 @@ public class Player_Logic : NetworkBehaviour
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera_Logic>();
         cam.InitLocalPlayer(gameObject.transform);
     }
+
     void Update()
+    {
+        Debug.Log(OwnerClientId + " collectibles: " + collectibles.Value);
+    }
+    void FixedUpdate()
     {
         //return if it's not the local player
         if (!IsOwner) return;
@@ -58,5 +63,10 @@ public class Player_Logic : NetworkBehaviour
         //deltaTime and fixedDeltaTime doesn't do anything.
         localPlayerVelocity.y = 0;
         playerTransform.position += localPlayerVelocity.normalized * movementSpeed * Time.deltaTime;
+    }
+
+    public void AddCollectible()
+    {
+        collectibles.Value++;
     }
 }

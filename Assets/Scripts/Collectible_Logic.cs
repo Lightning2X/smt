@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Multiplayer.Samples.Utilities.ClientAuthority;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -19,9 +20,9 @@ public class Collectible_Logic : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("other: " + other);
-        //if (other.gameObject.tag != "Player") return;
+        if (other.gameObject.tag != "Player") return;
         Debug.Log("is player: " + other.gameObject.tag);
-        //gameObject.SetActive(false);
+        other.gameObject.GetComponent<Player_Logic>().AddCollectible();
+        gameObject.GetComponent<NetworkObject>().Despawn(true);
     }
 }
