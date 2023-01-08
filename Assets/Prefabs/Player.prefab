@@ -545,6 +545,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerRB: {fileID: 3372567230384485891}
   playerTransform: {fileID: 637080268391105849}
+  bullet: {fileID: 0}
 --- !u!114 &454242124302025355
 MonoBehaviour:
   m_ObjectHideFlags: 0
