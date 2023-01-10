@@ -7,39 +7,49 @@ public class Enemy_Logistics : NetworkBehaviour
 {
     //[SerializeField] private Transform playerTransform;
     private Transform playerTransform;
-    private GameObject playerObj = null;
+    private GameObject[] playerObj = null;
+    private float minDistance = 6;
+
     [SerializeField] private Transform enemyTransform;
     [SerializeField] private AudioClip clip;
 
     private AudioSource audioSource;
 
-     private void Start()
-     {
+    public override void OnNetworkSpawn()
+    {
         audioSource = GetComponent<AudioSource>();
 
         if (playerObj == null)
-            playerObj = GameObject.FindGameObjectWithTag("Player");
-     }
+            playerObj = GameObject.FindGameObjectsWithTag("Player");
+    }
 
     void Update()
     {
         EnemyAttack();
     }
 
-
-
     private void EnemyAttack()
     {
-        if(Distance(playerObj.transform, enemyTransform) > 6)
-            return;
-        //move towards player
-        if(!audioSource.isPlaying)
+        //if(Distance(playerObj[0].transform, enemyTransform) > minDistance) return;
+        GameObject closestPlayer = null;
+        float closest = minDistance;
+
+        for(int x = 0; x < playerObj.Length; x++)
         {
-            //AudioSource.PlayClipAtPoint(clip, enemyTransform.position);
-            audioSource.Play();
+            float dis = Distance(playerObj[x].transform, enemyTransform);
+
+            if(dis > closest) continue;
+
+            closestPlayer = playerObj[x];
+            closest = minDistance;
         }
 
-        enemyTransform.position += MoveTo(playerObj.transform.position, enemyTransform.position) * Time.deltaTime;
+        if(closestPlayer == null) return;
+
+        //move towards player
+        if(!audioSource.isPlaying) audioSource.Play();
+
+        enemyTransform.position += MoveTo(closestPlayer.transform.position, enemyTransform.position) * Time.deltaTime;
     }
 
     private float Distance(Transform ob1, Transform ob2)

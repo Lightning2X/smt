@@ -26,10 +26,17 @@ public class Player_Logic : NetworkBehaviour
     }
     void Update()
     {
+<<<<<<< Updated upstream
+=======
+        Debug.Log(OwnerClientId + " collectibles: " + collectibles.Value);
+        PlayerShoot();
+    }
+    void FixedUpdate()
+    {
+>>>>>>> Stashed changes
         //return if it's not the local player
         if (!IsOwner) return;
         PlayerMovement();
-        PlayerShoot();
     }
 
     //rigidbody doesn't seem to work with FixedUpdate
