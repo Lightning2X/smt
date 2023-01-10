@@ -12,6 +12,7 @@ public class Player_Logic : NetworkBehaviour
     private float movementSpeed = 3;
     private string playerName = "LocalPlayer";
     private Camera_Logic cam;
+    private NetworkVariable<int> collectibles = new NetworkVariable<int>(0);
     bool cursorLocked = false;
     private float shootCD = 1;
     private float lastShot = 0;
@@ -24,16 +25,14 @@ public class Player_Logic : NetworkBehaviour
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera_Logic>();
         cam.InitLocalPlayer(gameObject.transform);
     }
+
     void Update()
     {
-<<<<<<< Updated upstream
-=======
         Debug.Log(OwnerClientId + " collectibles: " + collectibles.Value);
         PlayerShoot();
     }
     void FixedUpdate()
     {
->>>>>>> Stashed changes
         //return if it's not the local player
         if (!IsOwner) return;
         PlayerMovement();
@@ -72,6 +71,10 @@ public class Player_Logic : NetworkBehaviour
         playerTransform.position += localPlayerVelocity.normalized * movementSpeed * Time.deltaTime;
     }
 
+    public void AddCollectible()
+    {
+        collectibles.Value++;
+    }
     private void PlayerShoot()
     {
         if(Time.time - lastShot < shootCD)
