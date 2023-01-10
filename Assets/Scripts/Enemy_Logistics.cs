@@ -30,7 +30,6 @@ public class Enemy_Logistics : NetworkBehaviour
 
     private void EnemyAttack()
     {
-        //if(Distance(playerObj[0].transform, enemyTransform) > minDistance) return;
         GameObject closestPlayer = null;
         float closest = minDistance;
 
