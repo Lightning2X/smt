@@ -12,7 +12,6 @@ public class Player_Logic : NetworkBehaviour
     private string playerName = "LocalPlayer";
     private Camera_Logic cam;
     private NetworkVariable<int> collectibles = new NetworkVariable<int>(0);
-    bool cursorLocked = false;
     private float shootCD = 1;
     private float lastShot = 0;
 
