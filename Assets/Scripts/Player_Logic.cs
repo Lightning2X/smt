@@ -59,17 +59,29 @@ public class Player_Logic : NetworkBehaviour
     }
     private void PlayerShoot()
     {
-        if(Time.time - lastShot < shootCD)
+        if (Time.time - lastShot < shootCD)
             return;
 
         if (Input.GetKeyUp(KeyCode.Q))
-        {   
-            GameObject fireBullet = Instantiate(bullet, 
-                        playerTransform.position + (playerTransform.forward.normalized),  
-                        Quaternion.identity);
-            //fireBullet.GetComponent<NetworkObject>().Spawn();
-            fireBullet.GetComponent<Bullet_Logic>().FireBullet(playerTransform.gameObject);
+        {
+            if (NetworkManager.Singleton.IsServer)
+                fireBullet();
+            else
+                fireBulletServerRpc();
             lastShot = Time.time;
         }
+    }
+    private void fireBullet()
+    {
+        GameObject fireBullet = Instantiate(bullet,
+            playerTransform.position + (playerTransform.forward.normalized),
+            Quaternion.identity);
+        fireBullet.GetComponent<NetworkObject>().Spawn();
+        fireBullet.GetComponent<Bullet_Logic>().FireBullet(playerTransform.gameObject);
+    }
+    [ServerRpc]
+    private void fireBulletServerRpc()
+    {
+        fireBullet();
     }
 }

@@ -20,32 +20,26 @@ public class Bullet_Logic : NetworkBehaviour
 
     //    direction = playerObj.transform.rotation.normalized;
     //}
-    //public override void OnNetworkSpawn()
-    //{
-    //}
+    public override void OnNetworkSpawn()
+    {
+        fire = true;
+        Destroy(gameObject, 2);
+    }
 
     public void FireBullet(GameObject player)
     {
         playerObj = player;
-        m_Rigidbody = GetComponent<Rigidbody>();
+        m_Rigidbody = transform.GetComponent<Rigidbody>();
         direction = playerObj.transform.rotation.normalized;
-        fire = true;
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        if (!fire) return;
-        Destroy(gameObject, 2);
-        //transform.position += (direction * Vector3.forward).normalized * Time.deltaTime * 2;
-
     }
     private void FixedUpdate()
     {
-        if(!fire) return;
+        if((!IsServer && !fire && !IsSpawned) || m_Rigidbody == null) return;
         m_Rigidbody.MovePosition(transform.position + (direction * Vector3.forward).normalized * Time.deltaTime * bullet_Speed);
     }
     private void OnTriggerEnter(Collider other) 
     {
+        if (!IsServer || gameObject == null) return;
         Destroy(gameObject);
     }
 }

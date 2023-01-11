@@ -25,6 +25,7 @@ public class Enemy_Logistics : NetworkBehaviour
 
     void Update()
     {
+        if (playerObj == null) return;
         EnemyAttack();
     }
 
