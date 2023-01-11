@@ -1,3 +1,4 @@
+using Microsoft.Cci;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class Minimap : MonoBehaviour
     public RectTransform map2dEnd;
     public Transform map3dParent;
     public Transform map3dEnd;
+    public Transform playerOnScene;
 
     private Vector3 normalized, mapped;
 
@@ -31,5 +33,15 @@ public class Minimap : MonoBehaviour
     private static Vector3 Multiply(Vector3 a, Vector3 b)
     {
         return new Vector3(a.x * b.x, a.y * b.y, a.z * b.z);
+    }
+
+    void LateUpdate()
+    {
+        var newRot = playerOnScene.eulerAngles;
+        newRot.x = 0;
+        //newRot.z = 360 - newRot.y;
+        newRot.z = 450 - newRot.y;
+        newRot.y = 0;
+        playerInMap.rotation = Quaternion.Euler(newRot);
     }
 }
