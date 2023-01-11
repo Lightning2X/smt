@@ -1,20 +1,26 @@
 using Microsoft.Cci;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class Minimap : MonoBehaviour
+public class Minimap : NetworkBehaviour
 {
-    public RectTransform playerInMap;
-    public RectTransform map2dEnd;
-    public Transform map3dParent;
-    public Transform map3dEnd;
-    public Transform playerOnScene;
+    [SerializeField] private RectTransform playerInMap;
+    [SerializeField] private RectTransform map2dEnd;
+    //Serialize field only to check
+    [SerializeField] private Transform map3dParent;
+    [SerializeField] private Transform map3dEnd;
 
     private Vector3 normalized, mapped;
-
+    public override void OnNetworkSpawn()
+    {
+        map3dParent = GameObject.Find("Map").transform;
+        map3dEnd = GameObject.Find("End").transform;
+    }
     private void Update()
     {
+        if (!IsOwner || playerInMap == null || gameObject == null) return;
         normalized = Divide(
                 map3dParent.InverseTransformPoint(this.transform.position),
                 map3dEnd.position - map3dParent.position
@@ -37,7 +43,8 @@ public class Minimap : MonoBehaviour
 
     void LateUpdate()
     {
-        var newRot = playerOnScene.eulerAngles;
+        if (!IsOwner || gameObject == null || playerInMap == null) return;
+        var newRot = transform.eulerAngles;
         newRot.x = 0;
         //newRot.z = 360 - newRot.y;
         newRot.z = 450 - newRot.y;
