@@ -8,8 +8,8 @@ public class Camera_Logic : NetworkBehaviour
     //serialize only for debugging
     [SerializeField] private Transform localPlayer;
     [SerializeField] private Transform localPlayerOrientation;
-    private float sensitivtyX = 1000, sensitivityY = 1000;
-    private float rotationX, rotationY;
+    private float sensitivityY = 1000;
+    private float rotationY;
     bool cursorLocked = false;
     // Update is called once per frame
     void Update()
@@ -29,11 +29,7 @@ public class Camera_Logic : NetworkBehaviour
         if (!Cursor.visible)
         {
             rotationY += Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensitivityY; //rotation around Y axis
-            //rotationX -= Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensitivtyX; //rotation around X axis (potentially remove this DOF, since we need to keep aiming simple
-            //rotationX = Mathf.Clamp(rotationX, -90, 90);
-            //rotationX = m
-            //transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
-            localPlayer.rotation = Quaternion.Euler(0, rotationY, 0); //the entire model also looks up, just a placeholder
+            localPlayer.rotation = Quaternion.Euler(0, rotationY, 0);
         }
 
         transform.rotation = localPlayer.rotation;

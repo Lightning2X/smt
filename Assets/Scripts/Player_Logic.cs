@@ -28,7 +28,8 @@ public class Player_Logic : NetworkBehaviour
 
     void Update()
     {
-        Debug.Log(OwnerClientId + " collectibles: " + collectibles.Value);
+        //Debug.Log(OwnerClientId + " collectibles: " + collectibles.Value);
+        if (!IsOwner) return;
         PlayerShoot();
     }
     void FixedUpdate()
@@ -38,35 +39,16 @@ public class Player_Logic : NetworkBehaviour
         PlayerMovement();
     }
 
-    //rigidbody doesn't seem to work with FixedUpdate
-    //void FixedUpdate()
-    //{
-    //    if (!IsOwner) return;
-    //    if(localPlayerVelocity != Vector3.zero)
-    //    {
-    //        Debug.Log(localPlayerVelocity);
-    //    }
-    //    playerRB.AddForce(localPlayerVelocity.normalized * movementSpeed, ForceMode.Force);
-    //}
     private void PlayerMovement()
     {
         //reset velocity dir
         localPlayerVelocity = Vector3.zero;
         //We could make configurable keys. use forward etc for when you move around the camera
-        if (Input.GetKey(KeyCode.W))
-        {
-            localPlayerVelocity += playerTransform.forward;
-            //Debug.Log("Is host: " + IsHost);
-        }
+        if (Input.GetKey(KeyCode.W)) localPlayerVelocity += playerTransform.forward;
         if (Input.GetKey(KeyCode.A)) localPlayerVelocity -= playerTransform.right;
         if (Input.GetKey(KeyCode.S)) localPlayerVelocity -= playerTransform.forward;
         if (Input.GetKey(KeyCode.D)) localPlayerVelocity += playerTransform.right;
 
-        //Rigidbody somehow doesn't work if you build the game, but it does work with the editor. (For host and client the same)
-        //playerRB.AddForce(localPlayerVelocity.normalized * movementSpeed, ForceMode.Force);
-
-        //This somehow does work for editor and build, but the smoothness depends on the refreshrate of the monitor that the game starts on.
-        //deltaTime and fixedDeltaTime doesn't do anything.
         localPlayerVelocity.y = 0;
         playerTransform.position += localPlayerVelocity.normalized * movementSpeed * Time.deltaTime;
     }
@@ -82,9 +64,11 @@ public class Player_Logic : NetworkBehaviour
 
         if (Input.GetKeyUp(KeyCode.Q))
         {   
-            Instantiate(bullet, 
-                        playerTransform.position + (playerTransform.rotation * Vector3.forward),  
+            GameObject fireBullet = Instantiate(bullet, 
+                        playerTransform.position + (playerTransform.forward.normalized),  
                         Quaternion.identity);
+            //fireBullet.GetComponent<NetworkObject>().Spawn();
+            fireBullet.GetComponent<Bullet_Logic>().FireBullet(playerTransform.gameObject);
             lastShot = Time.time;
         }
     }
