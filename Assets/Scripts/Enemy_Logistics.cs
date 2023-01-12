@@ -5,24 +5,51 @@ using Unity.Netcode;
 
 public class Enemy_Logistics : NetworkBehaviour
 {
-    [SerializeField] private Transform playerTransform;
+    //[SerializeField] private Transform playerTransform;
+    private Transform playerTransform;
+    private GameObject[] playerObj = null;
+    private float minDistance = 6;
 
-    [SerializeField] private Transform enemyTransform;
+    //[SerializeField] private Transform enemyTransform;
+    [SerializeField] private AudioClip clip;
+
+    private AudioSource audioSource;
+
+    public override void OnNetworkSpawn()
+    {
+        audioSource = GetComponent<AudioSource>();
+
+        if (playerObj == null)
+            playerObj = GameObject.FindGameObjectsWithTag("Player");
+    }
 
     void Update()
     {
-        //return if it's not the local player
+        if (playerObj == null) return;
         EnemyAttack();
     }
 
-
-
     private void EnemyAttack()
     {
-        if(Distance(playerTransform, enemyTransform) > 3)
-            return;
+        GameObject closestPlayer = null;
+        float closest = minDistance;
+
+        for(int x = 0; x < playerObj.Length; x++)
+        {
+            float dis = Distance(playerObj[x].transform, transform);
+
+            if(dis > closest) continue;
+
+            closestPlayer = playerObj[x];
+            closest = minDistance;
+        }
+
+        if(closestPlayer == null) return;
+
         //move towards player
-        enemyTransform.position += MoveTo(playerTransform.position, enemyTransform.position) * Time.deltaTime;
+        if(!audioSource.isPlaying) audioSource.Play();
+
+        transform.position += MoveTo(closestPlayer.transform.position, transform.position) * Time.deltaTime;
     }
 
     private float Distance(Transform ob1, Transform ob2)
@@ -37,6 +64,6 @@ public class Enemy_Logistics : NetworkBehaviour
 
    private void OnTriggerEnter(Collider other) 
     {
-        enemyTransform.position += new Vector3(0,0,5);
+        transform.position += new Vector3(0,0,5);
     }
 }
