@@ -14,14 +14,12 @@ GameObject:
   - component: {fileID: 9085112952377027658}
   - component: {fileID: 4888561017752280459}
   - component: {fileID: -7938017442758391205}
-  - component: {fileID: 8545652475078908869}
-  - component: {fileID: 6384918300810547155}
   - component: {fileID: 1665836941419411580}
   - component: {fileID: -5234273286887288995}
   - component: {fileID: -1815752007412586092}
   m_Layer: 0
   m_Name: InvisibleEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,7 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b41a2cee441484baaabfd060ed4964, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTransform: {fileID: 1439253572171043451}
   clip: {fileID: 8300000, guid: ed5a845606b717444b45c54a20877f54, type: 3}
 --- !u!114 &8202691781498144801
 MonoBehaviour:
@@ -217,36 +214,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8545652475078908869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3425717383220179356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b35fb6231100a64d97fff080a7b143a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scale: 7
-  color: {r: 1, g: 0, b: 0, a: 1}
---- !u!114 &6384918300810547155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3425717383220179356}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7bf01e55d36be5458b4a4bdaaf1dcf7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerInMap: {fileID: 0}
-  map2dEnd: {fileID: 0}
-  map3dParent: {fileID: 0}
-  map3dEnd: {fileID: 0}
 --- !u!114 &1665836941419411580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,7 +226,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b41a2cee441484baaabfd060ed4964, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTransform: {fileID: 0}
   clip: {fileID: 0}
 --- !u!135 &-5234273286887288995
 SphereCollider:

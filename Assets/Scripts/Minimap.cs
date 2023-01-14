@@ -1,6 +1,7 @@
 using Microsoft.Cci;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -9,12 +10,14 @@ public class Minimap : NetworkBehaviour
     [SerializeField] private RectTransform localPlayerInMap;
     [SerializeField] private RectTransform coopPlayerInMap;
     [SerializeField] private RectTransform map2dEnd;
-    //Serialize field only to check
-    [SerializeField] private Transform map3dParent;
-    [SerializeField] private Transform map3dEnd;
+    
+    private Transform map3dParent;
+    private Transform map3dEnd;
     [SerializeField] private GameObject minimapCanvas;
+    [SerializeField] private RectTransform enemyInMapPrefab;
     private Transform coopPlayerInScene;
-
+    [SerializeField] private List<GameObject> enemiesInScene = new List<GameObject>();
+    [SerializeField] private List<RectTransform> enemiesInMap = new List<RectTransform>();
     private Vector3 normalized, mapped;
     public override void OnNetworkSpawn()
     {
@@ -23,8 +26,61 @@ public class Minimap : NetworkBehaviour
             return; }
         map3dParent = GameObject.Find("Map").transform;
         map3dEnd = GameObject.Find("End").transform;
+        enemiesInScene = new List<GameObject>();
+        enemiesInMap = new List<RectTransform>();
         searchForCoopPlayer();
         if(coopPlayerInScene == null) coopPlayerInMap.gameObject.SetActive(false);
+    }
+
+    private void searchForEnemies()
+    {
+        if(enemiesInScene == null)
+        {
+            enemiesInMap = null;
+            enemiesInScene = GameObject.FindGameObjectsWithTag("Enemy").ToList();
+            foreach (GameObject enemy in enemiesInScene)
+            {
+                enemiesInMap.Add(Instantiate(enemyInMapPrefab,minimapCanvas.transform.GetChild(0)));
+            }
+        }
+    }
+    //add single enemy to the minimap
+    public void AddEnemy(GameObject enemy)
+    {
+        if (!IsOwner) return;
+        Debug.Log("gameObject: " + gameObject + " contains enemy: " + enemiesInScene.Contains(enemy));
+        if(!enemiesInScene.Contains(enemy))
+        {
+            enemiesInScene.Add(enemy);
+            enemiesInMap.Add(Instantiate(enemyInMapPrefab, minimapCanvas.transform.GetChild(0)));
+            if (coopPlayerInScene != null)
+            {
+                Debug.Log("this gameObject: " + gameObject);
+                Debug.Log("coop: " + coopPlayerInScene.gameObject);
+                coopPlayerInScene.GetComponent<Minimap>().AddEnemy(enemy);
+            }
+        }
+    }
+    //remove single enemy from the minimap
+    public void RemoveEnemy(GameObject enemy)
+    {
+        if (!IsOwner) return;
+        if (enemiesInScene.Contains(enemy))
+        {
+            //use for loop since enemy gameobject is different than the one in enemiesInMap
+            for (int i = 0; i < enemiesInScene.Count; i++)
+            {
+                if (enemiesInScene[i] == enemy)
+                {
+                    enemiesInScene.RemoveAt(i);
+                    Destroy(enemiesInMap[i].gameObject);
+                    enemiesInMap.RemoveAt(i);
+                    if (coopPlayerInScene != null) coopPlayerInScene.GetComponent<Minimap>().RemoveEnemy(enemy);
+                    break;
+                }
+            }
+        }
+
     }
     private void searchForCoopPlayer()
     {
@@ -54,6 +110,14 @@ public class Minimap : NetworkBehaviour
         if (coopPlayerInScene == null) searchForCoopPlayer();
         // update if there are. No if else statements, since we can find a coop player and immediately update their pos.
         if (coopPlayerInScene != null) updateMapPos(coopPlayerInScene, coopPlayerInMap);
+
+        if (enemiesInScene != null)
+        {
+            for (int i = 0; i < enemiesInScene.Count; i++)
+            {
+                updateMapPos(enemiesInScene[i].transform, enemiesInMap[i]);
+            }
+        }
     }
     private void updateMapPos(Transform playerTransform, RectTransform mapPos)
     {
