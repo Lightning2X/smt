@@ -64,6 +64,7 @@ public class Enemy_Logistics : NetworkBehaviour
 
    private void OnTriggerEnter(Collider other) 
     {
+        if(other.tag == "EnemySensor") return;
         transform.position += new Vector3(0,0,5);
     }
 }
