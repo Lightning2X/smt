@@ -11,13 +11,19 @@ public class OpenDoor : MonoBehaviour
     public AudioSource DoorOpenSound;
     public bool Action = false;
     public bool IsOpen = false;
- 
+    Animator anim;
 
+    void Start()
+    {
+        anim = AnimeObject.GetComponent<Animator>();
+        anim.SetBool("character_nearby", false);
+    }
     void OnTriggerEnter(Collider collision)
     {
         if (collision.transform.tag == "Player")
         {
             Action = true;
+            
         }
     }
 
@@ -25,7 +31,8 @@ public class OpenDoor : MonoBehaviour
     {
         if (IsOpen == true)
         {
-            AnimeObject.GetComponent<Animator>().Play("door_2_close");
+            //AnimeObject.GetComponent<Animator>().Play("door_2_close");
+            anim.SetBool("character_nearby", false);
             DoorOpenSound.Play();
             IsOpen = false;
         }
@@ -39,7 +46,8 @@ public class OpenDoor : MonoBehaviour
         {
             if (Action == true)
             {
-                AnimeObject.GetComponent<Animator>().Play("door_2_open");
+                //AnimeObject.GetComponent<Animator>().Play("door_2_open");
+                anim.SetBool("character_nearby", true);
                 IsOpen = true; 
                 //ThisTrigger.SetActive(false);
                 DoorOpenSound.Play();
