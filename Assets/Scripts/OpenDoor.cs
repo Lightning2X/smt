@@ -47,13 +47,17 @@ public class OpenDoor : NetworkBehaviour
         {
             if(Action)
             {
-                Debug.Log("Open door");
-                openDoorServerRpc();
+                if (IsHost) openDoor();
+                else openDoorServerRpc();
             }
         }
     }
     [ServerRpc(RequireOwnership = false)]
     private void openDoorServerRpc()
+    {
+        openDoor();
+    }
+    private void openDoor()
     {
         //AnimeObject.GetComponent<Animator>().Play("door_2_open");
         anim.SetBool("character_nearby", true);
