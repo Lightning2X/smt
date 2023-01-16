@@ -8,6 +8,34 @@ using TMPro;
 
 public class MenuController : MonoBehaviour
 {
+
+    [Header("Main Menu Sounds")]
+    public AudioSource newGameButtonSound;
+    public AudioSource loadGameButtonSound;
+    public AudioSource optionsMainButtonSound;
+    public AudioSource quitGameButtonSound;
+    
+    [Header("Character Selection Sounds")]
+
+    public AudioSource playAsDonusButtonSound;
+    public AudioSource playAsSivionButtonSound;
+    public AudioSource returnToMainMenuButtonSound;
+    public AudioSource returnToCharacterSelectionSound;
+    public AudioSource noFileFoundSound;
+
+    [Header("Options Menu Sounds")]
+
+    public AudioSource toSoundMenuSound;
+    public AudioSource toGraphicsMenuSound;
+    public AudioSource toGameplayMenuSound;
+
+    [Header("Settings Sounds")]
+
+    public AudioSource resetToDefaultButtonSound;
+    public AudioSource applyAndReturnSound;
+    public AudioSource returnToOptionsMenuSound;
+
+
     [Header("Volume Settings")]
 
     [SerializeField] private TMP_Text VolumeTextValue = null;
@@ -53,6 +81,97 @@ public class MenuController : MonoBehaviour
 
     [Space(10)]
     [SerializeField] private Toggle fullScreenToggle;
+
+    public void NewGameSound()
+    {
+        newGameButtonSound.Play();
+    }
+
+    public void LoadGameSound()
+    {
+        loadGameButtonSound.Play();
+    //    mysounds.PlayOneShot(loadGameButtonSound);
+    }
+
+    public void OptionMainButtonSound()
+    {
+        optionsMainButtonSound.Play();
+    //    mysounds.PlayOneShot(optionsMainButtonSound);
+    }
+
+    public void QuitGameButtonSound()
+    {
+        quitGameButtonSound.Play();
+    //    mysounds.PlayOneShot(quitGameButtonSound);
+    }
+    
+    public void PlayAsDonusButtonSound()
+    {
+        playAsDonusButtonSound.Play();
+    //    mysounds.PlayOneShot(playAsDonusButtonSound);
+    }
+
+    public void PlayAsSivionButtonSound()
+    {
+        playAsSivionButtonSound.Play();
+    //    mysounds.PlayOneShot(playAsSivionButtonSound);
+    }
+
+
+    public void ReturnToMainMenuButtonSound()
+    {
+        returnToMainMenuButtonSound.Play();
+    //    mysounds.PlayOneShot(returnToMainMenuButtonSound);
+    }
+
+    public void ReturnToCharacterSelectionMenuButtonSound()
+    {
+        returnToCharacterSelectionSound.Play();
+    //    mysounds.PlayOneShot(returnToCharacterSelectionSound);
+    }
+
+    public void NoFileFoundSound()
+    {
+        noFileFoundSound.Play();
+    //    mysounds.PlayOneShot(noFileFoundSound);
+    }
+
+
+    public void ToSoundMenuSound()
+    {
+        toSoundMenuSound.Play();
+    //    mysounds.PlayOneShot(toSoundMenuSound);
+    }
+
+    public void ToGraphicsMenuSound()
+    {
+        toGraphicsMenuSound.Play();
+   //     mysounds.PlayOneShot(toGraphicsMenuSound);
+    }
+    
+    public void ToGameplayMenuSound()
+    {
+        toGameplayMenuSound.Play();
+  //      mysounds.PlayOneShot(toGameplayMenuSound);
+    }
+
+    public void ResetToDefaultButtonSound()
+    {
+        resetToDefaultButtonSound.Play();
+  //      mysounds.PlayOneShot(resetToDefaultButtonSound);
+    }
+
+    public void ApplyAndReturnSound()
+    {
+        applyAndReturnSound.Play();
+  //      mysounds.PlayOneShot(applyAndReturnSound);
+    }
+
+    public void ReturnToOptionsMenuSound()
+    {
+        returnToOptionsMenuSound.Play();
+//        mysounds.PlayOneShot(returnToOptionsMenuSound);
+    }
 
     public void SetResolution(int resolutionIndex)
     {
