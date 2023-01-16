@@ -1,23 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 
-public class OpenDoor : MonoBehaviour
+public class OpenDoor : NetworkBehaviour
 {
     public GameObject AnimeObject;
     public GameObject ThisTrigger;
     public AudioSource DoorOpenSound;
     public bool Action = false;
     public bool IsOpen = false;
- 
+    Animator anim;
 
+    public override void OnNetworkSpawn()
+    {
+        anim = AnimeObject.GetComponent<Animator>();
+        anim.SetBool("character_nearby", false);
+    }
     void OnTriggerEnter(Collider collision)
     {
-        if (collision.transform.tag == "Player")
+        if (collision.tag == "Player")
         {
             Action = true;
+            Debug.Log(collision.gameObject);
         }
     }
 
@@ -25,7 +32,8 @@ public class OpenDoor : MonoBehaviour
     {
         if (IsOpen == true)
         {
-            AnimeObject.GetComponent<Animator>().Play("door_2_close");
+            //AnimeObject.GetComponent<Animator>().Play("door_2_close");
+            anim.SetBool("character_nearby", false);
             DoorOpenSound.Play();
             IsOpen = false;
         }
@@ -37,15 +45,26 @@ public class OpenDoor : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (Action == true)
+            if(Action)
             {
-                AnimeObject.GetComponent<Animator>().Play("door_2_open");
-                IsOpen = true; 
-                //ThisTrigger.SetActive(false);
-                DoorOpenSound.Play();
-                Action = false;
+                if (IsHost) openDoor();
+                else openDoorServerRpc();
             }
         }
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void openDoorServerRpc()
+    {
+        openDoor();
+    }
+    private void openDoor()
+    {
+        //AnimeObject.GetComponent<Animator>().Play("door_2_open");
+        anim.SetBool("character_nearby", true);
+        IsOpen = true;
+        //ThisTrigger.SetActive(false);
+        DoorOpenSound.Play();
+        Action = false;
     }
 }
 
