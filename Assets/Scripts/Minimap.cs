@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Minimap : NetworkBehaviour
@@ -15,9 +16,10 @@ public class Minimap : NetworkBehaviour
     private Transform map3dEnd;
     [SerializeField] private GameObject minimapCanvas;
     [SerializeField] private RectTransform enemyInMapPrefab;
-    private Transform coopPlayerInScene;
-    [SerializeField] private List<GameObject> enemiesInScene = new List<GameObject>();
-    [SerializeField] private List<RectTransform> enemiesInMap = new List<RectTransform>();
+    [SerializeField] private Transform coopPlayerInScene;
+    private List<GameObject> enemiesInScene = new List<GameObject>();
+    private List<RectTransform> enemiesInMap = new List<RectTransform>();
+    [SerializeField] private GameObject enemySensor;
     private Vector3 normalized, mapped;
     public override void OnNetworkSpawn()
     {
@@ -28,6 +30,7 @@ public class Minimap : NetworkBehaviour
         map3dEnd = GameObject.Find("End").transform;
         enemiesInScene = new List<GameObject>();
         enemiesInMap = new List<RectTransform>();
+        spawnEnemySensor(transform);
         searchForCoopPlayer();
         if(coopPlayerInScene == null) coopPlayerInMap.gameObject.SetActive(false);
     }
@@ -97,10 +100,26 @@ public class Minimap : NetworkBehaviour
             {
                 coopPlayerInScene = players[i].transform;
                 coopPlayerInMap.gameObject.SetActive(true);
+                spawnEnemySensor(coopPlayerInScene);
+                //if (IsServer) {
+                //    Debug.Log("search coop player is server: " + gameObject);
+                //    spawnEnemySensor(false); 
+                //}
+                //else {
+                //    Debug.Log("search coop player is client: " + gameObject);
+                //    spawnEnemySensorServerRpc(false); 
+                //}
                 break;
             }
         }
     }
+    private void spawnEnemySensor(Transform targetPlayer)
+    {
+        GameObject mySensor = Instantiate(enemySensor, targetPlayer);
+        mySensor.transform.SetParent(targetPlayer);
+        mySensor.GetComponent<EnemySensor>().InitMinimap(this);
+    }
+
     private void Update()
     {
         if (!IsOwner || gameObject == null) return;
