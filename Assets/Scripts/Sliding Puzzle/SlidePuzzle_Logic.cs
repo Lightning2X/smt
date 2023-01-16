@@ -8,7 +8,7 @@ public class SlidePuzzle_Logic : MonoBehaviour
     [SerializeField] private RectTransform emptySpace = null;
     private Camera cam;
     private GameObject[] blocks;
-    private float swapDistance = 0.5f;
+    private float swapDistance = 45f;
     private int inversions;
     private int[] location;
     // Start is called before the first frame update
@@ -17,7 +17,7 @@ public class SlidePuzzle_Logic : MonoBehaviour
         cam = Camera.main;
         blocks = GameObject.FindGameObjectsWithTag("SlidingPuzzle_Block");
         location = new int[blocks.Length - 1];
-        swapDistance = blocks[1].GetComponent<RectTransform>().rect.width;
+        //swapDistance = blocks[1].GetComponent<RectTransform>().rect.width;
         for(int x = 0; x < location.Length; x++)
             {location[x] = x;}
         Invoke("Shuffle", 0.1f);
@@ -32,7 +32,6 @@ public class SlidePuzzle_Logic : MonoBehaviour
     {
         Block_Logic thisBlock = block.transform.GetComponent<Block_Logic>();
         double dis = Vector2.Distance(emptySpace.localPosition, thisBlock.targetPos);
-
         if(dis <= swapDistance)
         {
             Vector2 lastEmptySpacePos = emptySpace.localPosition;
