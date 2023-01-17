@@ -20,6 +20,9 @@ public class Minimap : NetworkBehaviour
     private List<GameObject> enemiesInScene = new List<GameObject>();
     private List<RectTransform> enemiesInMap = new List<RectTransform>();
     [SerializeField] private GameObject enemySensor;
+    [SerializeField] private GameObject audioSensor;
+    GameObject coopPlayerAudio = null;
+    GameObject localPlayerAudio = null;
     private Vector3 normalized, mapped;
     public override void OnNetworkSpawn()
     {
@@ -30,7 +33,8 @@ public class Minimap : NetworkBehaviour
         map3dEnd = GameObject.Find("End").transform;
         enemiesInScene = new List<GameObject>();
         enemiesInMap = new List<RectTransform>();
-        spawnEnemySensor(transform);
+        spawnAttachedSensor(transform,enemySensor);
+        spawnAttachedSensor(transform,audioSensor);
         searchForCoopPlayer();
         if(coopPlayerInScene == null) coopPlayerInMap.gameObject.SetActive(false);
     }
@@ -61,6 +65,8 @@ public class Minimap : NetworkBehaviour
                 Debug.Log("this gameObject: " + gameObject);
                 Debug.Log("coop: " + coopPlayerInScene.gameObject);
                 coopPlayerInScene.GetComponent<Minimap>().AddEnemy(enemy);
+                coopPlayerAudio.SetActive(true);
+                localPlayerAudio.SetActive(false);
             }
         }
     }
@@ -78,7 +84,12 @@ public class Minimap : NetworkBehaviour
                     enemiesInScene.RemoveAt(i);
                     Destroy(enemiesInMap[i].gameObject);
                     enemiesInMap.RemoveAt(i);
-                    if (coopPlayerInScene != null) coopPlayerInScene.GetComponent<Minimap>().RemoveEnemy(enemy);
+                    if (coopPlayerInScene != null)
+                    {
+                        coopPlayerInScene.GetComponent<Minimap>().RemoveEnemy(enemy);
+                        coopPlayerAudio.SetActive(false);
+                        localPlayerAudio.SetActive(true);
+                    }
                     break;
                 }
             }
@@ -100,7 +111,8 @@ public class Minimap : NetworkBehaviour
             {
                 coopPlayerInScene = players[i].transform;
                 coopPlayerInMap.gameObject.SetActive(true);
-                spawnEnemySensor(coopPlayerInScene);
+                spawnAttachedSensor(coopPlayerInScene,enemySensor);
+                spawnAttachedSensor(coopPlayerInScene,audioSensor,false);
                 //if (IsServer) {
                 //    Debug.Log("search coop player is server: " + gameObject);
                 //    spawnEnemySensor(false); 
@@ -113,11 +125,18 @@ public class Minimap : NetworkBehaviour
             }
         }
     }
-    private void spawnEnemySensor(Transform targetPlayer)
+    private void spawnAttachedSensor(Transform targetPlayer, GameObject sensorPrefab, bool gameObjectActive = true)
     {
-        GameObject mySensor = Instantiate(enemySensor, targetPlayer);
+        GameObject mySensor = Instantiate(sensorPrefab, targetPlayer);
         mySensor.transform.SetParent(targetPlayer);
-        mySensor.GetComponent<EnemySensor>().InitMinimap(this);
+        mySensor.SetActive(gameObjectActive);
+        EnemySensor enemySensor = mySensor.GetComponent<EnemySensor>();
+        if(enemySensor != null) enemySensor.InitMinimap(this);
+        if (mySensor.GetComponent<AudioListener>() != null)
+        {
+            if (gameObjectActive) localPlayerAudio = mySensor;
+            else coopPlayerAudio = mySensor;
+        }
     }
 
     private void Update()

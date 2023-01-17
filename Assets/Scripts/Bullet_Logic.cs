@@ -22,6 +22,7 @@ public class Bullet_Logic : NetworkBehaviour
     //}
     public override void OnNetworkSpawn()
     {
+        if (!IsServer) return;
         fire = true;
         Destroy(gameObject, 2);
     }
