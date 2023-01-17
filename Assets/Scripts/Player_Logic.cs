@@ -26,18 +26,17 @@ public class Player_Logic : NetworkBehaviour
 
     void Update()
     {
-        //Debug.Log(OwnerClientId + " collectibles: " + collectibles.Value);
         if (!IsOwner) return;
         PlayerShoot();
+        PlayerInput();
     }
     void FixedUpdate()
     {
         //return if it's not the local player
         if (!IsOwner) return;
-        PlayerMovement();
+        UpdatePlayerMovement();
     }
-
-    private void PlayerMovement()
+    private void PlayerInput()
     {
         //reset velocity dir
         localPlayerVelocity = Vector3.zero;
@@ -48,6 +47,9 @@ public class Player_Logic : NetworkBehaviour
         if (Input.GetKey(KeyCode.D)) localPlayerVelocity += transform.right;
 
         localPlayerVelocity.y = 0;
+    }
+    private void UpdatePlayerMovement()
+    {
         transform.position += localPlayerVelocity.normalized * movementSpeed * Time.deltaTime;
     }
 
