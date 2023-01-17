@@ -40,6 +40,7 @@ public class Bullet_Logic : NetworkBehaviour
     private void OnTriggerEnter(Collider other) 
     {
         if (!IsServer || gameObject == null) return;
-        Destroy(gameObject);
+        if (other.tag == "EnemySensor") return;
+        gameObject.SetActive(false);
     }
 }
