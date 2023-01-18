@@ -23,18 +23,27 @@ public class Minimap : NetworkBehaviour
     [SerializeField] private GameObject audioSensor;
     GameObject coopPlayerAudio = null;
     GameObject localPlayerAudio = null;
+
+    public Character localCharacter = Character.Null;
+    private Character coopCharacter = Character.Null;
     private Vector3 normalized, mapped;
+
+    public enum Character { Sivion, Donus, Null}
     public override void OnNetworkSpawn()
     {
         if (!IsOwner) {
             minimapCanvas.SetActive(false);
             return; }
+        if (IsHost) localCharacter = Character.Sivion; 
+        else localCharacter = Character.Donus;
+
         map3dParent = GameObject.Find("Map").transform;
         map3dEnd = GameObject.Find("End").transform;
         enemiesInScene = new List<GameObject>();
         enemiesInMap = new List<RectTransform>();
         spawnAttachedSensor(transform,enemySensor);
-        spawnAttachedSensor(transform,audioSensor);
+        spawnAttachedSensor(transform, audioSensor);
+        if (localCharacter != Character.Donus) AudioListener.volume = 0;            
         searchForCoopPlayer();
         if(coopPlayerInScene == null) coopPlayerInMap.gameObject.SetActive(false);
     }
@@ -65,8 +74,11 @@ public class Minimap : NetworkBehaviour
                 Debug.Log("this gameObject: " + gameObject);
                 Debug.Log("coop: " + coopPlayerInScene.gameObject);
                 coopPlayerInScene.GetComponent<Minimap>().AddEnemy(enemy);
-                coopPlayerAudio.SetActive(true);
-                localPlayerAudio.SetActive(false);
+                if (localCharacter == Character.Donus)
+                {
+                    coopPlayerAudio.SetActive(true);
+                    localPlayerAudio.SetActive(false);
+                }
             }
         }
     }
@@ -87,8 +99,12 @@ public class Minimap : NetworkBehaviour
                     if (coopPlayerInScene != null)
                     {
                         coopPlayerInScene.GetComponent<Minimap>().RemoveEnemy(enemy);
-                        coopPlayerAudio.SetActive(false);
-                        localPlayerAudio.SetActive(true);
+                        //if character is donus, switch depending on enemies
+                        if (localCharacter == Character.Donus && enemiesInScene.Count < 1)
+                        {
+                            coopPlayerAudio.SetActive(false);
+                            localPlayerAudio.SetActive(true);
+                        }
                     }
                     break;
                 }
@@ -112,7 +128,7 @@ public class Minimap : NetworkBehaviour
                 coopPlayerInScene = players[i].transform;
                 coopPlayerInMap.gameObject.SetActive(true);
                 spawnAttachedSensor(coopPlayerInScene,enemySensor);
-                spawnAttachedSensor(coopPlayerInScene,audioSensor,false);
+                if(localCharacter == Character.Donus) spawnAttachedSensor(coopPlayerInScene,audioSensor,false);
                 //if (IsServer) {
                 //    Debug.Log("search coop player is server: " + gameObject);
                 //    spawnEnemySensor(false); 
