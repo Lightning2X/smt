@@ -64,16 +64,16 @@ public class Minimap : NetworkBehaviour
     public void AddEnemy(GameObject enemy)
     {
         if (!IsOwner) return;
-        Debug.Log("gameObject: " + gameObject + " contains enemy: " + enemiesInScene.Contains(enemy));
+        //Debug.Log("gameObject: " + gameObject + " contains enemy: " + enemiesInScene.Contains(enemy));
         if(!enemiesInScene.Contains(enemy))
         {
             enemiesInScene.Add(enemy);
             enemiesInMap.Add(Instantiate(enemyInMapPrefab, minimapCanvas.transform.GetChild(0)));
             if (coopPlayerInScene != null)
             {
-                Debug.Log("this gameObject: " + gameObject);
-                Debug.Log("coop: " + coopPlayerInScene.gameObject);
-                coopPlayerInScene.GetComponent<Minimap>().AddEnemy(enemy);
+                //Debug.Log("this gameObject: " + gameObject);
+                //Debug.Log("coop: " + coopPlayerInScene.gameObject);
+                //coopPlayerInScene.GetComponent<Minimap>().AddEnemy(enemy);
                 if (localCharacter == Character.Donus)
                 {
                     coopPlayerAudio.SetActive(true);
@@ -98,7 +98,7 @@ public class Minimap : NetworkBehaviour
                     enemiesInMap.RemoveAt(i);
                     if (coopPlayerInScene != null)
                     {
-                        coopPlayerInScene.GetComponent<Minimap>().RemoveEnemy(enemy);
+                        //coopPlayerInScene.GetComponent<Minimap>().RemoveEnemy(enemy);
                         //if character is donus, switch depending on enemies
                         if (localCharacter == Character.Donus && enemiesInScene.Count < 1)
                         {
