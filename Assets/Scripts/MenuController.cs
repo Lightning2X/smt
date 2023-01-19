@@ -74,12 +74,11 @@ public class MenuController : MonoBehaviour
 
     [Header("Resolution Dropdowns")]
 
-    public TMP_Dropdown resolutionDropdown;
-    private Resolution[] resolutions;
-    private string option;
-    private int currentResolutionIndex = 0;
+    //public TMP_Dropdown resolutionDropdown;
+    //private Resolution[] resolutions;
+    //private string option;
+    //private int currentResolutionIndex = 0;
 
-    [Space(10)]
     [SerializeField] private Toggle fullScreenToggle;
 
     public void NewGameSound()
@@ -173,33 +172,33 @@ public class MenuController : MonoBehaviour
 //        mysounds.PlayOneShot(returnToOptionsMenuSound);
     }
 
-    public void SetResolution(int resolutionIndex)
-    {
-        Resolution resolution = resolutions[resolutionIndex];
-        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
-    }
+    //public void SetResolution(int resolutionIndex)
+    //{
+    //    Resolution resolution = resolutions[resolutionIndex];
+    //    Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+    //}
 
-    private void Start()
-    {
-        resolutions = Screen.resolutions;
-        resolutionDropdown.ClearOptions();
+    //private void Start()
+    //{
+    //    resolutions = Screen.resolutions;
+    //    resolutionDropdown.ClearOptions();
 
-        List<string> options = new List<string>();
+    //    List<string> options = new List<string>();
 
-        for (int i = 0; i < resolutions.Length; i++)
-        {
-            option = resolutions[i].width + " x " + resolutions[i].height;
-            options.Add(option);
+    //    for (int i = 0; i < resolutions.Length; i++)
+    //    {
+    //        option = resolutions[i].width + " x " + resolutions[i].height;
+    //        options.Add(option);
 
-            if(resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
-            {
-                currentResolutionIndex = i;
-            }
-        }
-        resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = currentResolutionIndex;
-        resolutionDropdown.RefreshShownValue();
-    }
+    //        if(resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
+    //        {
+    //            currentResolutionIndex = i;
+    //        }
+    //    }
+    //    resolutionDropdown.AddOptions(options);
+    //    resolutionDropdown.value = currentResolutionIndex;
+    //    resolutionDropdown.RefreshShownValue();
+    //}
 
     public void NewGameDialogYes()
     {
@@ -315,8 +314,8 @@ public class MenuController : MonoBehaviour
 
             fullScreenToggle.isOn = false;
             Screen.fullScreen = false;
-            Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, Screen.fullScreen);
-            resolutionDropdown.value = resolutions.Length;
+            //Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, Screen.fullScreen);
+            //resolutionDropdown.value = resolutions.Length;
             GraphicsApply();
         }
     }

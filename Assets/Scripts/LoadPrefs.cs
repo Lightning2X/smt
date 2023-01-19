@@ -35,7 +35,7 @@ public class LoadPrefs : MonoBehaviour
     [SerializeField] private TMP_Text brightnessTextValue = null;
     
     [Header("Resolution Dropdowns")]
-    [SerializeField] private TMP_Dropdown resolutionDropdown;
+    //[SerializeField] private TMP_Dropdown resolutionDropdown;
     [SerializeField] private Toggle fullScreenToggle;
 
     private void Awake()
@@ -74,7 +74,6 @@ public class LoadPrefs : MonoBehaviour
                 {
                     Screen.fullScreen = false;
                     fullScreenToggle.isOn = false;
-
                 }
             }
 
