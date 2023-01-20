@@ -6,18 +6,15 @@ using UnityEngine.UI;
 public class SlidePuzzle_Logic : MonoBehaviour
 {
     [SerializeField] private RectTransform emptySpace = null;
-    private Camera cam;
-    private GameObject[] blocks;
+    [SerializeField] private GameObject[] blocks;
+    //private GameObject[] blocks;
     private float swapDistance = 45f;
     private int inversions;
     private int[] location;
     // Start is called before the first frame update
     void Start()
     {
-        cam = Camera.main;
-        blocks = GameObject.FindGameObjectsWithTag("SlidingPuzzle_Block");
         location = new int[blocks.Length - 1];
-        //swapDistance = blocks[1].GetComponent<RectTransform>().rect.width;
         for(int x = 0; x < location.Length; x++)
             {location[x] = x;}
         Invoke("Shuffle", 0.1f);
@@ -59,6 +56,8 @@ public class SlidePuzzle_Logic : MonoBehaviour
         }
 
         if(CheckInversions() % 2 != 0) Shuffle();
+        
+        swapDistance = Vector2.Distance(emptySpace.localPosition, blocks[14].GetComponent<Block_Logic>().correctPos) * 1.1f;
     }
 
     //Checks if the current board is correct by checking if every piece is in correct position, return true or false accordingly
