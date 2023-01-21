@@ -37,7 +37,7 @@ public class Flashlight : MonoBehaviour
                 m.enabled = false;
             }
 
-            Debug.Log(pressNumber);
+            //Debug.Log(pressNumber);
         }
     }
     public void On()

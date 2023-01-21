@@ -24,7 +24,7 @@ public class OpenDoor : NetworkBehaviour
         if (collision.tag == "Player")
         {
             Action = true;
-            Debug.Log(collision.gameObject);
+            //Debug.Log(collision.gameObject);
         }
     }
 

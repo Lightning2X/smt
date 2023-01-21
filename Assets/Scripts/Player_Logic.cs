@@ -15,7 +15,7 @@ public class Player_Logic : NetworkBehaviour
     private float shootCD = 1;
     private float lastShot = 0;
 
-    public override void OnNetworkSpawn()
+      public override void OnNetworkSpawn()
     {
         if (!IsOwner) return;
         gameObject.name = playerName;
@@ -38,15 +38,35 @@ public class Player_Logic : NetworkBehaviour
     }
     private void PlayerInput()
     {
+        AudioSource footstepSound = gameObject.GetComponent<AudioSource>();
         //reset velocity dir
         localPlayerVelocity = Vector3.zero;
         //We could make configurable keys. use forward etc for when you move around the camera
-        if (Input.GetKey(KeyCode.W)) localPlayerVelocity += transform.forward;
-        if (Input.GetKey(KeyCode.A)) localPlayerVelocity -= transform.right;
-        if (Input.GetKey(KeyCode.S)) localPlayerVelocity -= transform.forward;
-        if (Input.GetKey(KeyCode.D)) localPlayerVelocity += transform.right;
-
+        if (Input.GetKey(KeyCode.W))
+        {
+            localPlayerVelocity += transform.forward;
+            footstepSound.enabled = true;
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            localPlayerVelocity -= transform.right;
+            footstepSound.enabled = true;
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            localPlayerVelocity -= transform.forward;
+            footstepSound.enabled = true;
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            localPlayerVelocity += transform.right;
+            footstepSound.enabled = true;
+        }
+        else
+            footstepSound.enabled = false;
         localPlayerVelocity.y = 0;
+       
+        //Debug.Log(footstepSound.enabled);
     }
     private void UpdatePlayerMovement()
     {
