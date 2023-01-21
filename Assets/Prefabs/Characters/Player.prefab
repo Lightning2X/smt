@@ -974,11 +974,11 @@ PrefabInstance:
     - target: {fileID: -2933139716659438605, guid: 5de8f44eb14afef429209da6b2c9b708, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: d45e972622535b34dac731dc626a7840, type: 2}
+      objectReference: {fileID: 2100000, guid: cca34e34324f7c045a57f240094397f2, type: 2}
     - target: {fileID: -2933139716659438605, guid: 5de8f44eb14afef429209da6b2c9b708, type: 3}
       propertyPath: m_Materials.Array.data[2]
       value: 
-      objectReference: {fileID: 2100000, guid: d45e972622535b34dac731dc626a7840, type: 2}
+      objectReference: {fileID: 2100000, guid: cca34e34324f7c045a57f240094397f2, type: 2}
     - target: {fileID: 919132149155446097, guid: 5de8f44eb14afef429209da6b2c9b708, type: 3}
       propertyPath: m_Name
       value: Updated_Astronaut
