@@ -26,7 +26,7 @@ public class Minimap : NetworkBehaviour
     GameObject localPlayerAudio = null;
 
     public Character localCharacter = Character.Null;
-    private Character coopCharacter = Character.Null;
+    //private Character coopCharacter = Character.Null;
     private Vector3 normalized, mapped;
     [SerializeField] private Transform PlayerSpawnPoints;
 
@@ -40,12 +40,12 @@ public class Minimap : NetworkBehaviour
         if (IsHost)
         {
             localCharacter = Character.Sivion;
-            transform.position = PlayerSpawnPoints.GetChild(0).transform.position;
+            //transform.position = PlayerSpawnPoints.GetChild(0).transform.position;
             Debug.Log(PlayerSpawnPoints.GetChild(0));
         }
         else { 
             localCharacter = Character.Donus;
-            transform.position = PlayerSpawnPoints.GetChild(1).transform.position;
+            //transform.position = PlayerSpawnPoints.GetChild(1).transform.position;
             Debug.Log(PlayerSpawnPoints.GetChild(1));
         }
 
@@ -59,8 +59,6 @@ public class Minimap : NetworkBehaviour
         searchForCoopPlayer();
         if(coopPlayerInScene == null) coopPlayerInMap.gameObject.SetActive(false);
 
-        
-        setSpawnLocation();
     }
 
     private void setSpawnLocation()
