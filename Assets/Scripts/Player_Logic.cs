@@ -23,6 +23,7 @@ public class Player_Logic : NetworkBehaviour
         //gameObject.tag = playerName;
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera_Logic>();
         cam.InitLocalPlayer(gameObject.transform);
+        anim = transform.GetComponent<Animator>();
     }
 
     void Update()
