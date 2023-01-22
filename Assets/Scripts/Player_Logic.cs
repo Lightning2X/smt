@@ -47,7 +47,7 @@ public class Player_Logic : NetworkBehaviour
         if (Input.GetKey(KeyCode.A)) localPlayerVelocity -= transform.right;
         if (Input.GetKey(KeyCode.S)) localPlayerVelocity -= transform.forward;
         if (Input.GetKey(KeyCode.D)) localPlayerVelocity += transform.right;
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        if (localPlayerVelocity != Vector3.zero)
         {
             anim.SetInteger("AnimationPar", 1);
         }
