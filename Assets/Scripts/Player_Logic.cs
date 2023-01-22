@@ -10,7 +10,7 @@ public class Player_Logic : NetworkBehaviour
     private Vector3 localPlayerVelocity;
     private float movementSpeed = 3;
     private string playerName = "LocalPlayer";
-    private Camera_Logic cam;
+    //private Camera_Logic cam;
     private NetworkVariable<int> collectibles = new NetworkVariable<int>(0);
     private float shootCD = 1;
     private float lastShot = 0;
@@ -20,24 +20,23 @@ public class Player_Logic : NetworkBehaviour
         if (!IsOwner) return;
         gameObject.name = playerName;
         //gameObject.tag = playerName;
-        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera_Logic>();
-        cam.InitLocalPlayer(gameObject.transform);
+        //cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera_Logic>();
+        //cam.InitLocalPlayer(gameObject.transform);
     }
 
     void Update()
     {
-        //Debug.Log(OwnerClientId + " collectibles: " + collectibles.Value);
         if (!IsOwner) return;
         PlayerShoot();
+        PlayerInput();
     }
     void FixedUpdate()
     {
         //return if it's not the local player
         if (!IsOwner) return;
-        PlayerMovement();
+        UpdatePlayerMovement();
     }
-
-    private void PlayerMovement()
+    private void PlayerInput()
     {
         //reset velocity dir
         localPlayerVelocity = Vector3.zero;
@@ -48,6 +47,9 @@ public class Player_Logic : NetworkBehaviour
         if (Input.GetKey(KeyCode.D)) localPlayerVelocity += transform.right;
 
         localPlayerVelocity.y = 0;
+    }
+    private void UpdatePlayerMovement()
+    {
         transform.position += localPlayerVelocity.normalized * movementSpeed * Time.deltaTime;
     }
 

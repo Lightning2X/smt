@@ -22,6 +22,7 @@ public class Bullet_Logic : NetworkBehaviour
     //}
     public override void OnNetworkSpawn()
     {
+        if (!IsServer) return;
         fire = true;
         Destroy(gameObject, 2);
     }
@@ -40,6 +41,7 @@ public class Bullet_Logic : NetworkBehaviour
     private void OnCollisionEnter(Collision other) 
     {
         if (!IsServer || gameObject == null) return;
-        Destroy(gameObject);
+        if (other.tag == "EnemySensor") return;
+        gameObject.SetActive(false);
     }
 }
