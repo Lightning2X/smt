@@ -61,7 +61,6 @@ public class Minimap : NetworkBehaviour
         if(localCharacter == Character.Null) transform.position = playerSpawnPoints.position;
         transform.position = playerSpawnPoints.GetChild((int)localCharacter).transform.position;
 
-        Debug.Log(localCharacter + " pos: " + transform.position);
         if (spawnCorrection) checkSpawn = false;
         else checkSpawn = true;
     }

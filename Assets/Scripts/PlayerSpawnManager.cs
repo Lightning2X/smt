@@ -13,15 +13,12 @@ public class PlayerSpawnManager : NetworkBehaviour
     private Character localPlayerCharacter = Character.Null;
     public override void OnNetworkSpawn()
     {
-        //if (!IsOwner) return;
-        Debug.Log("spawned" + NetworkManager.Singleton.LocalClientId);
         localPlayerCharacter = Character.Null;
 
         //change when menu works
         if (IsHost) localPlayerCharacter = Character.Sivion;
         else localPlayerCharacter = Character.Donus;
 
-        Debug.Log("localPlayerCharacter: " + localPlayerCharacter);
         SpawnPlayerServerRpc(NetworkManager.Singleton.LocalClientId,localPlayerCharacter);
     }
     [ServerRpc(RequireOwnership = false)]
@@ -37,7 +34,6 @@ public class PlayerSpawnManager : NetworkBehaviour
         else
             newPlayer = Instantiate(genericPlayer, spawnPoints.position, spawnRot);
 
-        Debug.Log("Clientid: " + clientId + " character " + spawnId + " Pos: " + newPlayer.transform.position);
         NetworkObject netObj = newPlayer.GetComponent<NetworkObject>();
         newPlayer.SetActive(true);
         netObj.SpawnAsPlayerObject(clientId, true);
@@ -46,7 +42,6 @@ public class PlayerSpawnManager : NetworkBehaviour
     [ClientRpc]
     private void testClientRpc()
     {
-        Debug.Log("test test test");
         GameObject.Find("LocalPlayer").GetComponent<Minimap>().setSpawnLocation();
     }
     //private void Test()
