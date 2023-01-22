@@ -9,6 +9,7 @@ public class PlayerSpawnManager : NetworkBehaviour
     [SerializeField] private GameObject playerSivion;
     [SerializeField] private GameObject playerDonus;
     [SerializeField] private Transform spawnPoints;
+    [SerializeField] private GameObject newPlayer;
     private Character localPlayerCharacter = Character.Null;
     public override void OnNetworkSpawn()
     {
@@ -21,12 +22,12 @@ public class PlayerSpawnManager : NetworkBehaviour
         else localPlayerCharacter = Character.Donus;
 
         Debug.Log("localPlayerCharacter: " + localPlayerCharacter);
-        SpawnPlayerServerRpc(NetworkManager.Singleton.LocalClientId, localPlayerCharacter);
+        SpawnPlayerServerRpc(NetworkManager.Singleton.LocalClientId,localPlayerCharacter);
     }
     [ServerRpc(RequireOwnership = false)]
     public void SpawnPlayerServerRpc(ulong clientId, Character spawnId)
     {
-        GameObject newPlayer;
+        //GameObject newPlayer;
         Vector3 spawnPos = spawnPoints.GetChild((int)spawnId).position;
         Quaternion spawnRot = spawnPoints.GetChild((int)spawnId).rotation;
         if (spawnId == Character.Sivion)
@@ -36,12 +37,34 @@ public class PlayerSpawnManager : NetworkBehaviour
         else
             newPlayer = Instantiate(genericPlayer, spawnPoints.position, spawnRot);
 
-        Debug.Log("Clientid: " + clientId + " Pos: " + newPlayer.transform.position);
+        Debug.Log("Clientid: " + clientId + " character " + spawnId + " Pos: " + newPlayer.transform.position);
         NetworkObject netObj = newPlayer.GetComponent<NetworkObject>();
-             
-        netObj.SpawnAsPlayerObject(clientId, true);
         newPlayer.SetActive(true);
+        netObj.SpawnAsPlayerObject(clientId, true);
+        testClientRpc();
     }
+    [ClientRpc]
+    private void testClientRpc()
+    {
+        Debug.Log("test test test");
+        GameObject.Find("LocalPlayer").GetComponent<Minimap>().setSpawnLocation();
+    }
+    //private void Test()
+    //{
+    //    Debug.Log("Test");
+    //    if (NetworkManager.Singleton == null) { return; }
+    //    Debug.Log("After test");
+    //    NetworkManager.Singleton.OnClientConnectedCallback += HandleClientConnected;
+    //}
 
+    //private void HandleClientConnected(ulong clientId)
+    //{
+    //    Debug.Log(clientId);
+    //    if (clientId == NetworkManager.Singleton.LocalClientId)
+    //    {
+    //        Debug.Log(clientId + " true " + localPlayerCharacter + " pos " + spawnPoints.GetChild((int)localPlayerCharacter).position);
+    //        SpawnPlayerServerRpc(clientId, localPlayerCharacter);
+    //    }
+    //}
     public Character GetLocalCharacter { get { return localPlayerCharacter; } }
 }

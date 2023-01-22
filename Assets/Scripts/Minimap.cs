@@ -30,6 +30,8 @@ public class Minimap : NetworkBehaviour
     private Vector3 normalized, mapped;
     [SerializeField] private Transform playerSpawnPoints;
     [SerializeField] private GameObject donusScreenCover;
+    private bool checkSpawn = false;
+    private float timePassed = 0;
     public override void OnNetworkSpawn()
     {
         if (!IsOwner) {
@@ -54,18 +56,14 @@ public class Minimap : NetworkBehaviour
 
     }
 
-    private void setSpawnLocation()
+    public void setSpawnLocation(bool spawnCorrection = false)
     {
-        if (localCharacter == Character.Sivion)
-        {
-            transform.position = playerSpawnPoints.GetChild(0).transform.position;
-            Debug.Log(playerSpawnPoints.GetChild(0) + " " + transform.position);
-        }
-        else
-        {
-            transform.position = playerSpawnPoints.GetChild(1).transform.position;
-            Debug.Log(playerSpawnPoints.GetChild(1) + " " + transform.position);
-        }
+        if(localCharacter == Character.Null) transform.position = playerSpawnPoints.position;
+        transform.position = playerSpawnPoints.GetChild((int)localCharacter).transform.position;
+
+        Debug.Log(localCharacter + " pos: " + transform.position);
+        if (spawnCorrection) checkSpawn = false;
+        else checkSpawn = true;
     }
     private void searchForEnemies()
     {
@@ -167,6 +165,12 @@ public class Minimap : NetworkBehaviour
         if (!IsOwner || gameObject == null) return;
         updateMapPos(transform, localPlayerInMap);
 
+        if (checkSpawn)
+        {
+            timePassed += Time.deltaTime;
+            if (timePassed > 1 && transform.position != playerSpawnPoints.GetChild((int)localCharacter).transform.position) setSpawnLocation(true);
+            //else checkSpawn = false;
+        }
         // search for coop players
         if (coopPlayerInScene == null) searchForCoopPlayer();
         // update if there are. No if else statements, since we can find a coop player and immediately update their pos.
