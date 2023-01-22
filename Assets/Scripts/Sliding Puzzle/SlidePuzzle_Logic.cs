@@ -14,7 +14,7 @@ public class SlidePuzzle_Logic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        location = new int[blocks.Length - 1];
+        location = new int[blocks.Length];
         for(int x = 0; x < location.Length; x++)
             {location[x] = x;}
         Invoke("Shuffle", 0.1f);
@@ -43,21 +43,21 @@ public class SlidePuzzle_Logic : MonoBehaviour
     //shuffles all the blocks on the board except for the empty space
     public void Shuffle()
     {
-        for(int n = 1; n < blocks.Length; n++)
+        for(int n = 0; n < blocks.Length; n++)
         {
-            int rnd = Random.Range(1, blocks.Length);
+            int rnd = Random.Range(0, blocks.Length);
             Vector3 safePos = blocks[n].GetComponent<Block_Logic>().targetPos;
             Vector3 testPos = blocks[rnd].GetComponent<Block_Logic>().targetPos;
             blocks[n].GetComponent<Block_Logic>().targetPos = testPos;
             blocks[rnd].GetComponent<Block_Logic>().targetPos = safePos;
-            int holder = location[n-1];
-            location[n-1] = location[rnd-1];
-            location[rnd-1] = holder;
+            int holder = location[n];
+            location[n] = location[rnd];
+            location[rnd] = holder;
         }
 
         if(CheckInversions() % 2 != 0) Shuffle();
         
-        swapDistance = Vector2.Distance(emptySpace.localPosition, blocks[14].GetComponent<Block_Logic>().correctPos) * 1.1f;
+        swapDistance = Vector2.Distance(emptySpace.localPosition, blocks[blocks.Length -1].GetComponent<Block_Logic>().correctPos) * 1.1f;
     }
 
     //Checks if the current board is correct by checking if every piece is in correct position, return true or false accordingly

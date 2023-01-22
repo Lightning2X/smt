@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7854562432831383278}
   - component: {fileID: 5316444620177323135}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: 4x4-slidingPuzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
