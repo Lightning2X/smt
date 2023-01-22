@@ -20,6 +20,7 @@ public class PlayerSpawnManager : NetworkBehaviour
         if (IsHost) localPlayerCharacter = Character.Sivion;
         else localPlayerCharacter = Character.Donus;
 
+        Debug.Log("localPlayerCharacter: " + localPlayerCharacter);
         SpawnPlayerServerRpc(NetworkManager.Singleton.LocalClientId, localPlayerCharacter);
     }
     [ServerRpc(RequireOwnership = false)]
@@ -28,13 +29,18 @@ public class PlayerSpawnManager : NetworkBehaviour
         GameObject newPlayer;
         Vector3 spawnPos = spawnPoints.GetChild((int)spawnId).position;
         Quaternion spawnRot = spawnPoints.GetChild((int)spawnId).rotation;
-        if (spawnId == 0)
+        if (spawnId == Character.Sivion)
             newPlayer = Instantiate(playerSivion,spawnPos,spawnRot);
-        else
+        else if(spawnId == Character.Donus)
             newPlayer = Instantiate(playerDonus, spawnPos, spawnRot);
+        else
+            newPlayer = Instantiate(genericPlayer, spawnPoints.position, spawnRot);
+
+        Debug.Log("Clientid: " + clientId + " Pos: " + newPlayer.transform.position);
         NetworkObject netObj = newPlayer.GetComponent<NetworkObject>();
-        newPlayer.SetActive(true);       
+             
         netObj.SpawnAsPlayerObject(clientId, true);
+        newPlayer.SetActive(true);
     }
 
     public Character GetLocalCharacter { get { return localPlayerCharacter; } }
