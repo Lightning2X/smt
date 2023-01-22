@@ -9,21 +9,25 @@ public class PlayerSpawnManager : NetworkBehaviour
     [SerializeField] private GameObject playerSivion;
     [SerializeField] private GameObject playerDonus;
     [SerializeField] private Transform spawnPoints;
+    private Character localPlayerCharacter = Character.Null;
     public override void OnNetworkSpawn()
     {
-        if (!IsOwner) return;
-        int spawnId = 2;
-        if (IsHost) spawnId = 0;
-        else spawnId = 1;
+        //if (!IsOwner) return;
+        Debug.Log("spawned" + NetworkManager.Singleton.LocalClientId);
+        localPlayerCharacter = Character.Null;
 
-        SpawnPlayerServerRpc(NetworkManager.Singleton.LocalClientId, spawnId);
+        //change when menu works
+        if (IsHost) localPlayerCharacter = Character.Sivion;
+        else localPlayerCharacter = Character.Donus;
+
+        SpawnPlayerServerRpc(NetworkManager.Singleton.LocalClientId, localPlayerCharacter);
     }
     [ServerRpc(RequireOwnership = false)]
-    public void SpawnPlayerServerRpc(ulong clientId, int spawnId)
+    public void SpawnPlayerServerRpc(ulong clientId, Character spawnId)
     {
         GameObject newPlayer;
-        Vector3 spawnPos = spawnPoints.GetChild(spawnId).position;
-        Quaternion spawnRot = spawnPoints.GetChild(spawnId).rotation;
+        Vector3 spawnPos = spawnPoints.GetChild((int)spawnId).position;
+        Quaternion spawnRot = spawnPoints.GetChild((int)spawnId).rotation;
         if (spawnId == 0)
             newPlayer = Instantiate(playerSivion,spawnPos,spawnRot);
         else
@@ -32,4 +36,6 @@ public class PlayerSpawnManager : NetworkBehaviour
         newPlayer.SetActive(true);       
         netObj.SpawnAsPlayerObject(clientId, true);
     }
+
+    public Character GetLocalCharacter { get { return localPlayerCharacter; } }
 }

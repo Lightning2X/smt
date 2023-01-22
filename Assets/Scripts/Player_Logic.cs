@@ -10,7 +10,7 @@ public class Player_Logic : NetworkBehaviour
     private Vector3 localPlayerVelocity;
     private float movementSpeed = 3;
     private string playerName = "LocalPlayer";
-    private Camera_Logic cam;
+    //private Camera_Logic cam;
     private NetworkVariable<int> collectibles = new NetworkVariable<int>(0);
     private float shootCD = 1;
     private float lastShot = 0;
@@ -20,8 +20,8 @@ public class Player_Logic : NetworkBehaviour
         if (!IsOwner) return;
         gameObject.name = playerName;
         //gameObject.tag = playerName;
-        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera_Logic>();
-        cam.InitLocalPlayer(gameObject.transform);
+        //cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera_Logic>();
+        //cam.InitLocalPlayer(gameObject.transform);
     }
 
     void Update()
