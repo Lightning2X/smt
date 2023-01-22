@@ -44,7 +44,6 @@ public class Camera_Logic : NetworkBehaviour
     public void InitLocalPlayer(Transform player)
     {
         localPlayer = player;
-        localPlayerOrientation = localPlayer.GetChild(0);
-
+        localPlayerOrientation = localPlayer.GetChild(1).GetChild(0).GetChild(1);
     }
 }

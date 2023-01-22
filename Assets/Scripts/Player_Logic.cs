@@ -14,6 +14,7 @@ public class Player_Logic : NetworkBehaviour
     private NetworkVariable<int> collectibles = new NetworkVariable<int>(0);
     private float shootCD = 1;
     private float lastShot = 0;
+    private Animator anim;
 
     public override void OnNetworkSpawn()
     {
@@ -45,6 +46,14 @@ public class Player_Logic : NetworkBehaviour
         if (Input.GetKey(KeyCode.A)) localPlayerVelocity -= transform.right;
         if (Input.GetKey(KeyCode.S)) localPlayerVelocity -= transform.forward;
         if (Input.GetKey(KeyCode.D)) localPlayerVelocity += transform.right;
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        {
+            anim.SetInteger("AnimationPar", 1);
+        }
+        else
+        {
+            anim.SetInteger("AnimationPar", 0);
+        }
 
         localPlayerVelocity.y = 0;
     }
