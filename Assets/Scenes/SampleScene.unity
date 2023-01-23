@@ -27212,7 +27212,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.9951153
   MaxDistance: 15
   Pan2D: 0
   rolloffMode: 2
@@ -66605,6 +66605,7 @@ MonoBehaviour:
   playerSivion: {fileID: 637080268391105853, guid: 56d5ac0a1e23a1144aa1ca1be4315874, type: 3}
   playerDonus: {fileID: 637080268391105853, guid: 56d5ac0a1e23a1144aa1ca1be4315874, type: 3}
   spawnPoints: {fileID: 1380497352}
+  newPlayer: {fileID: 0}
 --- !u!1 &1382178358
 GameObject:
   m_ObjectHideFlags: 0
