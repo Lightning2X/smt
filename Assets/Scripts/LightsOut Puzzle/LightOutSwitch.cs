@@ -34,7 +34,7 @@ public class LightOutSwitch : NetworkBehaviour
             IsOpen = false;
         }
         if (switched) switched = false;
-        else camera_Logic.changeCursorState();
+        //else camera_Logic.changeCursorState();
         lightOutUI.SetActive(false);
         Action = false;
     }
