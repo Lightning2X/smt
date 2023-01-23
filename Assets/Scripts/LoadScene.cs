@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +13,10 @@ public class LoadScene : MonoBehaviour
     {
         timeElapsed += Time.deltaTime;
         if (timeElapsed > delayBeforeLoading) 
+        {
+            SceneManager.LoadScene(sceneNameToLoad);
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             SceneManager.LoadScene(sceneNameToLoad);
         }
