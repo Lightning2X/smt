@@ -17389,7 +17389,7 @@ MonoBehaviour:
   brightnessTextValue: {fileID: 1566999175}
   defaultBrightness: 1
   confirmationPrompt: {fileID: 205148242}
-  _NewGameLevel: Level1
+  _NewGameLevel: Intro
   NoSavedGameDialog: {fileID: 1451743010}
   fullScreenToggle: {fileID: 585587602}
 --- !u!4 &1799307828
