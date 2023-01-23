@@ -8,9 +8,10 @@ public class ReverbTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider collision)
     {
+        AS = collision.GetComponent<AudioSource>();
+        if (AS == null) return;
         if (collision.tag == "Player")
         {
-            AS = collision.GetComponent<AudioSource>();
             AS.volume = 1.0f;
         }
     }
@@ -18,6 +19,7 @@ public class ReverbTrigger : MonoBehaviour
     void OnTriggerExit(Collider collision)
     {
         AS = collision.GetComponent<AudioSource>();
+        if (AS == null) return;
         AS.volume = 0.2f;
     }
 

@@ -1274,6 +1274,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 418175298245788518}
   m_SourcePrefab: {fileID: 100100000, guid: 2b858557e2e59a748a2c7606a9052648, type: 3}
+--- !u!23 &7592389854181249471 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: 2b858557e2e59a748a2c7606a9052648, type: 3}
+  m_PrefabInstance: {fileID: 7592389854183541215}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7592389854183444351 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 2b858557e2e59a748a2c7606a9052648, type: 3}
@@ -1293,7 +1298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _light: {fileID: 8057254087490734066}
   pressNumber: 0
-  Obj: {fileID: 7592389854183444351}
+  m: {fileID: 7592389854181249471}
 --- !u!4 &7592389854183674719 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 2b858557e2e59a748a2c7606a9052648, type: 3}

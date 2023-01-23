@@ -1,24 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class Flashlight : MonoBehaviour
+public class Flashlight : NetworkBehaviour
 {
     [SerializeField] private Light _light;
     public int pressNumber;
-    public GameObject Obj;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public MeshRenderer m;
 
     // Update is called once per frame
     private void Update()
     {
-        MeshRenderer m = Obj.GetComponent<MeshRenderer>();
-
+        if(!IsOwner) return;
         if (Input.GetKeyDown(KeyCode.Tab)) 
         {
             if (pressNumber >= 3)
