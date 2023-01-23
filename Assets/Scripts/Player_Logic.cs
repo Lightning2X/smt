@@ -10,7 +10,7 @@ public class Player_Logic : NetworkBehaviour
     private Vector3 localPlayerVelocity;
     private float movementSpeed = 3;
     private string playerName = "LocalPlayer";
-    private Camera_Logic cam;
+    //private Camera_Logic cam;
     private NetworkVariable<int> collectibles = new NetworkVariable<int>(0);
     private float shootCD = 1;
     private float lastShot = 0;
@@ -20,8 +20,8 @@ public class Player_Logic : NetworkBehaviour
         if (!IsOwner) return;
         gameObject.name = playerName;
         //gameObject.tag = playerName;
-        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera_Logic>();
-        cam.InitLocalPlayer(gameObject.transform);
+        //cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera_Logic>();
+        //cam.InitLocalPlayer(gameObject.transform);
     }
 
     void Update()
@@ -42,30 +42,18 @@ public class Player_Logic : NetworkBehaviour
         //reset velocity dir
         localPlayerVelocity = Vector3.zero;
         //We could make configurable keys. use forward etc for when you move around the camera
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W)) { localPlayerVelocity += transform.forward; }
+        if (Input.GetKey(KeyCode.A)) { localPlayerVelocity -= transform.right; }
+        if (Input.GetKey(KeyCode.S)) { localPlayerVelocity -= transform.forward; }
+        if (Input.GetKey(KeyCode.D)) { localPlayerVelocity += transform.right; }
+
+        localPlayerVelocity.y = 0;
+        if(localPlayerVelocity.magnitude> 0)
         {
-            localPlayerVelocity += transform.forward;
-            footstepSound.enabled = true;
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            localPlayerVelocity -= transform.right;
-            footstepSound.enabled = true;
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            localPlayerVelocity -= transform.forward;
-            footstepSound.enabled = true;
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            localPlayerVelocity += transform.right;
             footstepSound.enabled = true;
         }
         else
             footstepSound.enabled = false;
-        localPlayerVelocity.y = 0;
-       
         //Debug.Log(footstepSound.enabled);
     }
     private void UpdatePlayerMovement()

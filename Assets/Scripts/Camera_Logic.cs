@@ -41,10 +41,13 @@ public class Camera_Logic : NetworkBehaviour
     }
 
     //Initialize transform at eyeheight of the player model
-    public void InitLocalPlayer(Transform player)
+    public void InitLocalPlayer(Transform player, Character character = Character.Null)
     {
         localPlayer = player;
         localPlayerOrientation = localPlayer.GetChild(0);
-
+        if (character == Character.Donus)
+        { 
+            GetComponent<Camera>().farClipPlane = 0.03f; 
+        }
     }
 }
