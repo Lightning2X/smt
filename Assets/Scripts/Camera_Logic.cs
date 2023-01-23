@@ -35,7 +35,7 @@ public class Camera_Logic : NetworkBehaviour
         transform.rotation = localPlayer.rotation;
     }
 
-    private void changeCursorState()
+    public void changeCursorState()
     {
         if (cursorLocked)
             Cursor.lockState = CursorLockMode.None;
