@@ -7,6 +7,7 @@ public class Player_Logic : NetworkBehaviour
 {
     [SerializeField] private Rigidbody playerRB;
     [SerializeField] private GameObject bullet;
+    [SerializeField] private Animator anim;
     private Vector3 localPlayerVelocity;
     private float movementSpeed = 3;
     private string playerName = "LocalPlayer";
@@ -15,13 +16,11 @@ public class Player_Logic : NetworkBehaviour
     private float shootCD = 1;
     private float lastShot = 0;
 
+
     public override void OnNetworkSpawn()
     {
         if (!IsOwner) return;
         gameObject.name = playerName;
-        //gameObject.tag = playerName;
-        //cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera_Logic>();
-        //cam.InitLocalPlayer(gameObject.transform);
     }
 
     void Update()
@@ -38,6 +37,7 @@ public class Player_Logic : NetworkBehaviour
     }
     private void PlayerInput()
     {
+        AudioSource footstepSound = gameObject.GetComponent<AudioSource>();
         //reset velocity dir
         localPlayerVelocity = Vector3.zero;
         //We could make configurable keys. use forward etc for when you move around the camera
@@ -45,8 +45,17 @@ public class Player_Logic : NetworkBehaviour
         if (Input.GetKey(KeyCode.A)) localPlayerVelocity -= transform.right;
         if (Input.GetKey(KeyCode.S)) localPlayerVelocity -= transform.forward;
         if (Input.GetKey(KeyCode.D)) localPlayerVelocity += transform.right;
-
         localPlayerVelocity.y = 0;
+        if(localPlayerVelocity.magnitude> 0)
+        {
+            anim.SetInteger("AnimationPar", 1);
+            footstepSound.enabled = true;
+        }
+        else{
+            anim.SetInteger("AnimationPar", 0);
+            footstepSound.enabled = false;
+        }
+        //Debug.Log(footstepSound.enabled);
     }
     private void UpdatePlayerMovement()
     {

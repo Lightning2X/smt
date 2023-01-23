@@ -38,7 +38,7 @@ public class Bullet_Logic : NetworkBehaviour
         if((!IsServer && !fire && !IsSpawned) || m_Rigidbody == null) return;
         m_Rigidbody.MovePosition(transform.position + (direction * Vector3.forward).normalized * Time.deltaTime * bullet_Speed);
     }
-    private void OnTriggerEnter(Collider other) 
+    private void OnTriggerEnter(Collider other)
     {
         if (!IsServer || gameObject == null) return;
         if (other.tag == "EnemySensor") return;
