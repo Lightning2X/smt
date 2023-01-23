@@ -50998,6 +50998,11 @@ MonoBehaviour:
       SourcePrefabToOverride: {fileID: 0}
       SourceHashToOverride: 0
       OverridingTargetPrefab: {fileID: 0}
+    - Override: 0
+      Prefab: {fileID: 3425717383220179356, guid: a54ee61e907dfc045a695b6b229de487, type: 3}
+      SourcePrefabToOverride: {fileID: 0}
+      SourceHashToOverride: 0
+      OverridingTargetPrefab: {fileID: 0}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0
@@ -96436,6 +96441,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1964554576}
   - component: {fileID: 1964554577}
+  - component: {fileID: 1964554578}
   m_Layer: 0
   m_Name: EnemySpawnPoints
   m_TagString: Untagged
@@ -96472,6 +96478,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f13c4062a9158114b957978457acd535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sivionEnemySpawnPoints: {fileID: 463290060}
+  donusEnemySpawnPoints: {fileID: 1477925309}
+  enemyPrefab: {fileID: 3425717383220179356, guid: a54ee61e907dfc045a695b6b229de487, type: 3}
+--- !u!114 &1964554578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964554575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2056541312
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1001 &1965092167
 PrefabInstance:
   m_ObjectHideFlags: 0
