@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class EnemySensor : NetworkBehaviour
+public class EnemySensor : MonoBehaviour
 {
     [SerializeField] private Minimap minimap;
 
     private void OnTriggerEnter(Collider other)
     {
-        //if (!IsOwner) return;
-        if(other.tag == "Enemy")
+        if (minimap == null) return;
+        if (other.tag == "Enemy")
         {
             minimap.AddEnemy(other.gameObject);
         }
@@ -18,10 +18,15 @@ public class EnemySensor : NetworkBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        //if (!IsOwner) return;
+        if (minimap == null) return;
         if (other.tag == "Enemy")
         {
             minimap.RemoveEnemy(other.gameObject);
         }
+    }
+
+    public void InitMinimap(Minimap _minimap)
+    {
+        minimap = _minimap;
     }
 }
