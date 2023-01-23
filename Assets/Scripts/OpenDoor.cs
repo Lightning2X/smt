@@ -24,7 +24,7 @@ public class OpenDoor : NetworkBehaviour
         if (collision.tag == "Player")
         {
             Action = true;
-            Debug.Log(collision.gameObject);
+            //Debug.Log(collision.gameObject);
         }
     }
 
@@ -63,8 +63,14 @@ public class OpenDoor : NetworkBehaviour
         anim.SetBool("character_nearby", true);
         IsOpen = true;
         //ThisTrigger.SetActive(false);
-        DoorOpenSound.Play();
+        playDoorSoundClientRpc();
         Action = false;
+    }
+
+    [ClientRpc]
+    private void playDoorSoundClientRpc()
+    {
+        DoorOpenSound.Play();
     }
 }
 

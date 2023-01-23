@@ -6,6 +6,7 @@ using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 
+public enum Character { Sivion, Donus, Null }
 public class Minimap : NetworkBehaviour
 {
     [SerializeField] private RectTransform localPlayerInMap;
@@ -20,21 +21,49 @@ public class Minimap : NetworkBehaviour
     private List<GameObject> enemiesInScene = new List<GameObject>();
     private List<RectTransform> enemiesInMap = new List<RectTransform>();
     [SerializeField] private GameObject enemySensor;
+    [SerializeField] private GameObject audioSensor;
+    GameObject coopPlayerAudio = null;
+    GameObject localPlayerAudio = null;
+
+    public Character localCharacter = Character.Null;
+    private Camera_Logic cam;
     private Vector3 normalized, mapped;
+    [SerializeField] private Transform playerSpawnPoints;
+    [SerializeField] private GameObject donusScreenCover;
+    private bool checkSpawn = false;
+    private float timePassed = 0;
     public override void OnNetworkSpawn()
     {
         if (!IsOwner) {
             minimapCanvas.SetActive(false);
             return; }
+        playerSpawnPoints = GameObject.Find("PlayerSpawnPoints").transform;
+        localCharacter = playerSpawnPoints.GetComponent<PlayerSpawnManager>().GetLocalCharacter;
+
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera_Logic>();
+        cam.InitLocalPlayer(gameObject.transform,localCharacter);
+
         map3dParent = GameObject.Find("Map").transform;
         map3dEnd = GameObject.Find("End").transform;
         enemiesInScene = new List<GameObject>();
         enemiesInMap = new List<RectTransform>();
-        spawnEnemySensor(transform);
+        spawnAttachedSensor(transform,enemySensor);
+        spawnAttachedSensor(transform, audioSensor);
+        if (localCharacter != Character.Donus) AudioListener.volume = 0;         
+        if (localCharacter == Character.Donus) donusScreenCover.SetActive(true);
         searchForCoopPlayer();
         if(coopPlayerInScene == null) coopPlayerInMap.gameObject.SetActive(false);
+
     }
 
+    public void setSpawnLocation(bool spawnCorrection = false)
+    {
+        if(localCharacter == Character.Null) transform.position = playerSpawnPoints.position;
+        transform.position = playerSpawnPoints.GetChild((int)localCharacter).transform.position;
+
+        if (spawnCorrection) checkSpawn = false;
+        else checkSpawn = true;
+    }
     private void searchForEnemies()
     {
         if(enemiesInScene == null)
@@ -43,7 +72,7 @@ public class Minimap : NetworkBehaviour
             enemiesInScene = GameObject.FindGameObjectsWithTag("Enemy").ToList();
             foreach (GameObject enemy in enemiesInScene)
             {
-                enemiesInMap.Add(Instantiate(enemyInMapPrefab,minimapCanvas.transform.GetChild(0)));
+                enemiesInMap.Add(Instantiate(enemyInMapPrefab,minimapCanvas.transform));
             }
         }
     }
@@ -51,16 +80,18 @@ public class Minimap : NetworkBehaviour
     public void AddEnemy(GameObject enemy)
     {
         if (!IsOwner) return;
-        Debug.Log("gameObject: " + gameObject + " contains enemy: " + enemiesInScene.Contains(enemy));
+        //Debug.Log("gameObject: " + gameObject + " contains enemy: " + enemiesInScene.Contains(enemy));
         if(!enemiesInScene.Contains(enemy))
         {
             enemiesInScene.Add(enemy);
-            enemiesInMap.Add(Instantiate(enemyInMapPrefab, minimapCanvas.transform.GetChild(0)));
+            enemiesInMap.Add(Instantiate(enemyInMapPrefab, minimapCanvas.transform));
             if (coopPlayerInScene != null)
             {
-                Debug.Log("this gameObject: " + gameObject);
-                Debug.Log("coop: " + coopPlayerInScene.gameObject);
-                coopPlayerInScene.GetComponent<Minimap>().AddEnemy(enemy);
+                if (localCharacter == Character.Donus)
+                {
+                    coopPlayerAudio.SetActive(true);
+                    localPlayerAudio.SetActive(false);
+                }
             }
         }
     }
@@ -78,7 +109,15 @@ public class Minimap : NetworkBehaviour
                     enemiesInScene.RemoveAt(i);
                     Destroy(enemiesInMap[i].gameObject);
                     enemiesInMap.RemoveAt(i);
-                    if (coopPlayerInScene != null) coopPlayerInScene.GetComponent<Minimap>().RemoveEnemy(enemy);
+                    if (coopPlayerInScene != null)
+                    {
+                        //if character is donus, switch depending on enemies
+                        if (localCharacter == Character.Donus && enemiesInScene.Count < 1)
+                        {
+                            coopPlayerAudio.SetActive(false);
+                            localPlayerAudio.SetActive(true);
+                        }
+                    }
                     break;
                 }
             }
@@ -100,24 +139,24 @@ public class Minimap : NetworkBehaviour
             {
                 coopPlayerInScene = players[i].transform;
                 coopPlayerInMap.gameObject.SetActive(true);
-                spawnEnemySensor(coopPlayerInScene);
-                //if (IsServer) {
-                //    Debug.Log("search coop player is server: " + gameObject);
-                //    spawnEnemySensor(false); 
-                //}
-                //else {
-                //    Debug.Log("search coop player is client: " + gameObject);
-                //    spawnEnemySensorServerRpc(false); 
-                //}
+                spawnAttachedSensor(coopPlayerInScene,enemySensor);
+                if(localCharacter == Character.Donus) spawnAttachedSensor(coopPlayerInScene,audioSensor,false);
                 break;
             }
         }
     }
-    private void spawnEnemySensor(Transform targetPlayer)
+    private void spawnAttachedSensor(Transform targetPlayer, GameObject sensorPrefab, bool gameObjectActive = true)
     {
-        GameObject mySensor = Instantiate(enemySensor, targetPlayer);
+        GameObject mySensor = Instantiate(sensorPrefab, targetPlayer);
         mySensor.transform.SetParent(targetPlayer);
-        mySensor.GetComponent<EnemySensor>().InitMinimap(this);
+        mySensor.SetActive(gameObjectActive);
+        EnemySensor enemySensor = mySensor.GetComponent<EnemySensor>();
+        if(enemySensor != null) enemySensor.InitMinimap(this);
+        if (mySensor.GetComponent<AudioListener>() != null)
+        {
+            if (gameObjectActive) localPlayerAudio = mySensor;
+            else coopPlayerAudio = mySensor;
+        }
     }
 
     private void Update()
@@ -125,6 +164,12 @@ public class Minimap : NetworkBehaviour
         if (!IsOwner || gameObject == null) return;
         updateMapPos(transform, localPlayerInMap);
 
+        if (checkSpawn)
+        {
+            timePassed += Time.deltaTime;
+            if (timePassed > 1 && transform.position != playerSpawnPoints.GetChild((int)localCharacter).transform.position) setSpawnLocation(true);
+            //else checkSpawn = false;
+        }
         // search for coop players
         if (coopPlayerInScene == null) searchForCoopPlayer();
         // update if there are. No if else statements, since we can find a coop player and immediately update their pos.
