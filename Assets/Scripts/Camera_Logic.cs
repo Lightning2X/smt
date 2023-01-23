@@ -12,18 +12,19 @@ public class Camera_Logic : NetworkBehaviour
     private float rotationY;
     bool cursorLocked = false;
     // Update is called once per frame
+    public override void OnNetworkSpawn()
+    {
+        //cursorLocked = true;
+        changeCursorState();
+    }
+
     void Update()
     {
         if (localPlayer == null)
             return;
         if (Input.GetKeyUp(KeyCode.P))
         {
-            if (cursorLocked)
-                Cursor.lockState = CursorLockMode.None;
-            else
-                Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = cursorLocked;
-            cursorLocked = !cursorLocked;
+            changeCursorState();
         }
         if (!Cursor.visible)
         {
@@ -32,6 +33,16 @@ public class Camera_Logic : NetworkBehaviour
         }
 
         transform.rotation = localPlayer.rotation;
+    }
+
+    public void changeCursorState()
+    {
+        if (cursorLocked)
+            Cursor.lockState = CursorLockMode.None;
+        else
+            Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = cursorLocked;
+        cursorLocked = !cursorLocked;
     }
     void LateUpdate()
     {
