@@ -8,6 +8,7 @@ public class Sound_riddle : NetworkBehaviour
     // Start is called before the first frame update
     public override void OnNetworkSpawn()
     {
+        if (!IsServer) return;
         StartCoroutine(PlayLoop()); 
     }
 
@@ -15,7 +16,7 @@ public class Sound_riddle : NetworkBehaviour
     {
         while(true)
         {
-            GetComponent<AudioSource>().Play();;
+            GetComponent<AudioSource>().Play();
             yield return new WaitForSeconds(15);  // delay between loops
         }
     }
