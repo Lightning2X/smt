@@ -66602,7 +66602,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   genericPlayer: {fileID: 637080268391105853, guid: 56d5ac0a1e23a1144aa1ca1be4315874, type: 3}
-  playerSivion: {fileID: 637080268391105853, guid: 56d5ac0a1e23a1144aa1ca1be4315874, type: 3}
+  playerSivion: {fileID: 637080268391105853, guid: 363e5f98d22237e469d8230bd7b43396, type: 3}
   playerDonus: {fileID: 637080268391105853, guid: 56d5ac0a1e23a1144aa1ca1be4315874, type: 3}
   spawnPoints: {fileID: 1380497352}
   newPlayer: {fileID: 0}
