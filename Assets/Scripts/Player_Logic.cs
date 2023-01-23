@@ -7,6 +7,7 @@ public class Player_Logic : NetworkBehaviour
 {
     [SerializeField] private Rigidbody playerRB;
     [SerializeField] private GameObject bullet;
+    [SerializeField] private Animator anim;
     private Vector3 localPlayerVelocity;
     private float movementSpeed = 3;
     private string playerName = "LocalPlayer";
@@ -14,16 +15,12 @@ public class Player_Logic : NetworkBehaviour
     private NetworkVariable<int> collectibles = new NetworkVariable<int>(0);
     private float shootCD = 1;
     private float lastShot = 0;
-    private Animator anim;
 
-      public override void OnNetworkSpawn()
+
+    public override void OnNetworkSpawn()
     {
         if (!IsOwner) return;
         gameObject.name = playerName;
-        //gameObject.tag = playerName;
-        //cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera_Logic>();
-        //cam.InitLocalPlayer(gameObject.transform);
-        anim = transform.GetComponent<Animator>();
     }
 
     void Update()
