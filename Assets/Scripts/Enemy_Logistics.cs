@@ -14,7 +14,7 @@ public class Enemy_Logistics : NetworkBehaviour
     [SerializeField] private AudioClip clip;
 
     private AudioSource audioSource;
-
+    private EnemySpawnManager enemySpawnManager;
     public override void OnNetworkSpawn()
     {
         audioSource = GetComponent<AudioSource>();
@@ -64,7 +64,23 @@ public class Enemy_Logistics : NetworkBehaviour
 
    private void OnTriggerEnter(Collider other) 
     {
-        if(other.tag == "EnemySensor") return;
+        if(other.tag == "EnemySensor" || !IsServer) return;
         transform.position += new Vector3(0,0,5);
+        enemySpawnManager.SubtractEnemies();
+        testClientRpc();
+
+        gameObject.GetComponent<NetworkObject>().Despawn(true);
+    }
+    [ClientRpc]
+    private void testClientRpc()
+    {
+        foreach (GameObject item in playerObj)
+        {
+            item.GetComponent<Minimap>().RemoveEnemy(gameObject);
+        }
+    }
+    public void InitEnemySpawnManager(EnemySpawnManager enemySpawnManager)
+    {
+        this.enemySpawnManager = enemySpawnManager;
     }
 }
