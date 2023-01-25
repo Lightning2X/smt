@@ -263,6 +263,7 @@ GameObject:
   - component: {fileID: 67505733}
   - component: {fileID: 67505732}
   - component: {fileID: 67505731}
+  - component: {fileID: 67505734}
   m_Layer: 5
   m_Name: Yes_Donus
   m_TagString: Untagged
@@ -455,6 +456,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 67505729}
   m_CullTransparentMesh: 1
+--- !u!114 &67505734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67505729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1799307827}
+          m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+          m_MethodName: PlayAsDonusButtonSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &86466460
 GameObject:
   m_ObjectHideFlags: 0
@@ -3448,6 +3478,7 @@ GameObject:
   - component: {fileID: 279154624}
   - component: {fileID: 279154623}
   - component: {fileID: 279154622}
+  - component: {fileID: 279154625}
   m_Layer: 5
   m_Name: Return_Button
   m_TagString: Untagged
@@ -3652,6 +3683,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 279154620}
   m_CullTransparentMesh: 1
+--- !u!114 &279154625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279154620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1799307827}
+          m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+          m_MethodName: ReturnToMainMenuButtonSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &283828580
 GameObject:
   m_ObjectHideFlags: 0
@@ -8347,6 +8407,7 @@ GameObject:
   - component: {fileID: 814147423}
   - component: {fileID: 814147422}
   - component: {fileID: 814147421}
+  - component: {fileID: 814147424}
   m_Layer: 5
   m_Name: Donus_Button
   m_TagString: Untagged
@@ -8563,6 +8624,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 814147419}
   m_CullTransparentMesh: 1
+--- !u!114 &814147424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 814147419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1799307827}
+          m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+          m_MethodName: PlayAsDonusButtonSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &822460448
 GameObject:
   m_ObjectHideFlags: 0
@@ -8575,6 +8665,7 @@ GameObject:
   - component: {fileID: 822460452}
   - component: {fileID: 822460451}
   - component: {fileID: 822460450}
+  - component: {fileID: 822460453}
   m_Layer: 5
   m_Name: No_Sivion
   m_TagString: Untagged
@@ -8791,6 +8882,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 822460448}
   m_CullTransparentMesh: 1
+--- !u!114 &822460453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 822460448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1799307827}
+          m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+          m_MethodName: ReturnToCharacterSelectionMenuButtonSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &831355052
 GameObject:
   m_ObjectHideFlags: 0
@@ -11313,6 +11433,7 @@ GameObject:
   - component: {fileID: 1019200059}
   - component: {fileID: 1019200058}
   - component: {fileID: 1019200057}
+  - component: {fileID: 1019200060}
   m_Layer: 5
   m_Name: Yes_Sivion
   m_TagString: Untagged
@@ -11505,6 +11626,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1019200055}
   m_CullTransparentMesh: 1
+--- !u!114 &1019200060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019200055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1799307827}
+          m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+          m_MethodName: PlayAsSivionButtonSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1020543128
 GameObject:
   m_ObjectHideFlags: 0
@@ -12744,6 +12894,7 @@ GameObject:
   - component: {fileID: 1338744295}
   - component: {fileID: 1338744294}
   - component: {fileID: 1338744293}
+  - component: {fileID: 1338744296}
   m_Layer: 5
   m_Name: Sivion_Button
   m_TagString: Untagged
@@ -12960,6 +13111,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1338744291}
   m_CullTransparentMesh: 1
+--- !u!114 &1338744296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1338744291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1799307827}
+          m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+          m_MethodName: PlayAsSivionButtonSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1341294730
 GameObject:
   m_ObjectHideFlags: 0
@@ -15074,6 +15254,7 @@ GameObject:
   - component: {fileID: 1541553479}
   - component: {fileID: 1541553478}
   - component: {fileID: 1541553477}
+  - component: {fileID: 1541553480}
   m_Layer: 5
   m_Name: Options_Button
   m_TagString: Untagged
@@ -15280,6 +15461,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1541553475}
   m_CullTransparentMesh: 1
+--- !u!114 &1541553480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541553475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1799307827}
+          m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+          m_MethodName: OptionMainButtonSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1549696576
 GameObject:
   m_ObjectHideFlags: 0
@@ -18353,6 +18563,7 @@ GameObject:
   - component: {fileID: 1963946520}
   - component: {fileID: 1963946519}
   - component: {fileID: 1963946518}
+  - component: {fileID: 1963946521}
   m_Layer: 5
   m_Name: No_Donus
   m_TagString: Untagged
@@ -18569,6 +18780,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1963946516}
   m_CullTransparentMesh: 1
+--- !u!114 &1963946521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963946516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1799307827}
+          m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+          m_MethodName: ReturnToCharacterSelectionMenuButtonSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1986286266
 GameObject:
   m_ObjectHideFlags: 0
