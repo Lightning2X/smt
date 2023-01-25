@@ -8,7 +8,7 @@ public class Enemy_Logistics : NetworkBehaviour
     //[SerializeField] private Transform playerTransform;
     private Transform playerTransform;
     private GameObject[] playerObj = null;
-    private float minDistance = 6;
+    private float minDistance = 20;
 
     //[SerializeField] private Transform enemyTransform;
     [SerializeField] private AudioClip clip;
@@ -59,7 +59,7 @@ public class Enemy_Logistics : NetworkBehaviour
 
     private Vector3 MoveTo(Vector3 ob1, Vector3 ob2)
     {
-        return (ob1 - ob2).normalized;
+        return (ob1 - ob2).normalized * 0.4f;
     }
 
    private void OnTriggerEnter(Collider other) 
