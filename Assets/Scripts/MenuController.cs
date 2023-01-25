@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
-
+using UnityEngine.EventSystems;
 
 public class MenuController : MonoBehaviour
 {
@@ -80,6 +80,37 @@ public class MenuController : MonoBehaviour
     //private int currentResolutionIndex = 0;
 
     [SerializeField] private Toggle fullScreenToggle;
+
+    [Header("Menu Nav")]
+    public GameObject newGameFirstButton;
+    public GameObject donusFirstButton;
+    public GameObject sivionFirstButton;
+    public GameObject optionsFirstButton;
+
+    private void Start()
+    {
+        newGameSelect();
+    }
+    public void newGameSelect()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(newGameFirstButton);
+    }
+    public void donusSelect()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(donusFirstButton);
+    }
+    public void sivionSelect()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(sivionFirstButton);
+    }
+    public void optionsSelect()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(optionsFirstButton);
+    }
 
     public void NewGameSound()
     {
