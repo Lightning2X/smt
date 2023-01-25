@@ -7,7 +7,6 @@ using UnityEngine;
 public class Collectible_Logic : NetworkBehaviour
 {
     private float spinning = 50;
-
     public override void OnNetworkSpawn()
     {
         Debug.Log("hello");

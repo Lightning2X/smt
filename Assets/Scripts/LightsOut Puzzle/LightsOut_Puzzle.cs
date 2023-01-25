@@ -11,6 +11,7 @@ public class LightsOut_Puzzle : MonoBehaviour
     int boardSize = 25;
     int[] masks;
     int playBoard = 0;
+    bool finished = false;
     [SerializeField] private Transform BoardButtons;
     void Start()
     {
@@ -76,23 +77,25 @@ public class LightsOut_Puzzle : MonoBehaviour
     //Updates the board by reading the bits
     void UpdateBoard()
     {
+        if(finished) return;   
         for (int i = 0; i < boardSize; i++)
-        {
-            Transform button = BoardButtons.GetChild(i);
-            if (((playBoard >> i) & 1) == 1)
             {
-                button.GetComponentInChildren<TextMeshProUGUI>().text = "0";
-                button.GetComponent<Image>().color = Color.red;
+                Transform button = BoardButtons.GetChild(i);
+                if (((playBoard >> i) & 1) == 1)
+                {
+                    button.GetComponentInChildren<TextMeshProUGUI>().text = "0";
+                    button.GetComponent<Image>().color = Color.red;
+                }
+                else
+                {
+                    button.GetComponentInChildren<TextMeshProUGUI>().text = "1";
+                    button.GetComponent<Image>().color = Color.green;
+                }
             }
-            else
+            if(playBoard == 0)
             {
-                button.GetComponentInChildren<TextMeshProUGUI>().text = "1";
-                button.GetComponent<Image>().color = Color.green;
+                finished = true;
+                Debug.Log("You Win!");
             }
-        }
-        if(playBoard == 0)
-        {
-            Debug.Log("You Win!");
-        }
     }
 }
