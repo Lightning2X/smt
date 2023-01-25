@@ -6,6 +6,7 @@ using Unity.Netcode;
 public class CollectibleMaster_Logic : NetworkBehaviour
 {
     [SerializeField] private GameObject door;
+    [SerializeField] private GameObject dooropener;
     private bool finished = false;
     private bool riddled = false;
     public AudioClip[] ac;
@@ -42,6 +43,7 @@ public class CollectibleMaster_Logic : NetworkBehaviour
                 GetComponent<AudioSource>().clip = ac[0];
                 GetComponent<AudioSource>().Play();
                 riddled = true;
+                dooropener.gameObject.transform.GetComponent<OpenDoor>().access = true;
                 //Destroy(gameObject);
                 //victory sound
             }

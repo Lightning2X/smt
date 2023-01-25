@@ -13,6 +13,7 @@ public class LightsOut_Puzzle : MonoBehaviour
     int playBoard = 0;
     bool finished = false;
     [SerializeField] private Transform BoardButtons;
+    [SerializeField] private GameObject mgc;
     void Start()
     {
         masks = new int[boardSize];
@@ -94,6 +95,7 @@ public class LightsOut_Puzzle : MonoBehaviour
             }
             if(playBoard == 0)
             {
+                mgc.gameObject.transform.GetComponent<Sivion_Game_Checker>().light = true;
                 finished = true;
                 Debug.Log("You Win!");
             }

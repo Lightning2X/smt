@@ -12,6 +12,7 @@ public class OpenDoor : NetworkBehaviour
     public AudioSource DoorOpenSound;
     public bool Action = false;
     public bool IsOpen = false;
+    public bool access = false;
     Animator anim;
 
     public override void OnNetworkSpawn()
@@ -43,12 +44,15 @@ public class OpenDoor : NetworkBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if(Action)
+        if (access)
+        { 
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                if (IsHost) openDoor();
-                else openDoorServerRpc();
+                if(Action)
+                {
+                    if (IsHost) openDoor();
+                    else openDoorServerRpc();
+                }
             }
         }
     }

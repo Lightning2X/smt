@@ -10,6 +10,7 @@ public class SlidePuzzle_Logic : MonoBehaviour
     private Image emptyImage = null;
     [SerializeField] private GameObject emptyBlock = null;
     [SerializeField] private GameObject[] blocks;
+    [SerializeField] private GameObject mgc;
     //private GameObject[] blocks;
     private float swapDistance = 45f;
     private int inversions;
@@ -46,6 +47,7 @@ public class SlidePuzzle_Logic : MonoBehaviour
 
         if(Correct()) //should be extended with the wanted functionality for succeding the puzzle
             {
+                mgc.gameObject.transform.GetComponent<Sivion_Game_Checker>().slide = true;
                 completed = true;
                 emptyImage.enabled = true;
             }
