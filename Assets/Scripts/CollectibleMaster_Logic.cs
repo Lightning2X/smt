@@ -5,9 +5,11 @@ using Unity.Netcode;
 
 public class CollectibleMaster_Logic : NetworkBehaviour
 {
-    //[SerializeField] private GameObject riddle;
+    [SerializeField] private GameObject door;
+    [SerializeField] private GameObject dooropener;
     private bool finished = false;
-
+    private bool riddled = false;
+    public AudioClip[] ac;
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -33,10 +35,16 @@ public class CollectibleMaster_Logic : NetworkBehaviour
         if(finished)
         {
             if (Input.GetKey(KeyCode.Alpha1) || Input.GetKey(KeyCode.Alpha2) || Input.GetKey(KeyCode.Alpha4))
-            {/*spawn enemies, suspend riddle*/}
+            {GetComponent<AudioSource>().clip = ac[1];
+                GetComponent<AudioSource>().Play();}
             if (Input.GetKey(KeyCode.Alpha3))
             {
-                Destroy(gameObject);
+                door.transform.GetComponent<AudioSource>().Play();
+                GetComponent<AudioSource>().clip = ac[0];
+                GetComponent<AudioSource>().Play();
+                riddled = true;
+                dooropener.gameObject.transform.GetComponent<OpenDoor>().access = true;
+                //Destroy(gameObject);
                 //victory sound
             }
         } 
@@ -44,8 +52,9 @@ public class CollectibleMaster_Logic : NetworkBehaviour
 
     IEnumerator PlayLoop()
     {
-        while(true)
+        while(!riddled)
         {
+            GetComponent<AudioSource>().clip = ac[2];
             GetComponent<AudioSource>().Play();
             yield return new WaitForSeconds(15);  // delay between loops
         }

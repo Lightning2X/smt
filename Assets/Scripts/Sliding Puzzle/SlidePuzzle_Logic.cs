@@ -5,15 +5,22 @@ using UnityEngine.UI;
 
 public class SlidePuzzle_Logic : MonoBehaviour
 {
-    [SerializeField] private RectTransform emptySpace = null;
+    //[SerializeField] private 
+    private RectTransform emptySpace = null;
+    private Image emptyImage = null;
+    [SerializeField] private GameObject emptyBlock = null;
     [SerializeField] private GameObject[] blocks;
+    [SerializeField] private GameObject mgc;
     //private GameObject[] blocks;
     private float swapDistance = 45f;
     private int inversions;
     private int[] location;
+    private bool completed = false;
     // Start is called before the first frame update
     void Start()
     {
+        emptyImage = emptyBlock.transform.GetComponent<Image>();
+        emptySpace = emptyBlock.transform.GetComponent<RectTransform>();
         location = new int[blocks.Length];
         for(int x = 0; x < location.Length; x++)
             {location[x] = x;}
@@ -27,6 +34,8 @@ public class SlidePuzzle_Logic : MonoBehaviour
 
     public void TileMove(GameObject block)
     {
+        if(completed) return;
+
         Block_Logic thisBlock = block.transform.GetComponent<Block_Logic>();
         double dis = Vector2.Distance(emptySpace.localPosition, thisBlock.targetPos);
         if(dis <= swapDistance)
@@ -37,7 +46,12 @@ public class SlidePuzzle_Logic : MonoBehaviour
         }
 
         if(Correct()) //should be extended with the wanted functionality for succeding the puzzle
-            Debug.Log("Woohoo");
+            {
+                mgc.gameObject.transform.GetComponent<Sivion_Game_Checker>().slide = true;
+                completed = true;
+                emptyImage.enabled = true;
+            }
+
     }
 
     //shuffles all the blocks on the board except for the empty space

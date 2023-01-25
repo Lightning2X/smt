@@ -42,6 +42,7 @@ public class Bullet_Logic : NetworkBehaviour
     {
         if (!IsServer || gameObject == null) return;
         if (other.tag == "EnemySensor") return;
+        if (other.tag != "Enemy") return;
         gameObject.SetActive(false);
     }
 }
