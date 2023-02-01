@@ -11,7 +11,7 @@ public class EnemySpawnManager : NetworkBehaviour
     [SerializeField] private GameObject enemyPrefab;
 
     private GameObject localPlayer, coopPlayer;
-    private float timerAcc = 0f, spawnInterval = 10;
+    private float timerAcc = 0f, spawnInterval = 120;
     private bool startTimer = false;
     private int totalEnemies = 1; // enemies per side, so 1 = 2 enemies in scene
     private int enemiesInScene = 0;
