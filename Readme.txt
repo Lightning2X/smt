@@ -7,9 +7,11 @@ To build the game:
 2. Choose build and run at the bottom.
 
 You can start multiple clients to test out hosting:
-Run the build and choose server or host (Host is also a player, which we will probably use)
+In the Level1 scene, set the ip address in the networkmanager to the ip that you want to connect to. (127.0.0.1 if you want to test both on the local pc)
+Run the build and choose server or host
 Run another instance of the build and choose client instead.
 (Can of course also be used in the editor)
+
 
 27/12/2022 Updated BaseScene 
 [Interact items]
